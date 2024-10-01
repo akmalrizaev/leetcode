@@ -44,6 +44,11 @@ board.length == 9
 board[i].length == 9
 board[i][j] is a digit 1-9 or '.'.
 
+Topics
+Array
+Hash Table
+Matrix
+
 */
 
 function isValidSudoku(board: string[][]): boolean {
