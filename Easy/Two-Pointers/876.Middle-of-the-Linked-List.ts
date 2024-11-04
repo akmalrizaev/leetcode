@@ -29,15 +29,15 @@ Two Pointers
 
 class ListNode_876 {
   val: number;
-  next: ListNode | null;
+  next: ListNode_876 | null;
 
-  constructor(val?: number, next?: ListNode | null) {
+  constructor(val?: number, next?: ListNode_876 | null) {
     this.val = val === undefined ? 0 : val;
     this.next = next === undefined ? null : next;
   }
 }
 
-function middleNode(head: ListNode | null): ListNode | null {
+function middleNode(head: ListNode_876 | null): ListNode_876 | null {
   let slow = head;
   let fast = head;
 
@@ -51,10 +51,10 @@ function middleNode(head: ListNode | null): ListNode | null {
 
 // Example Usage:
 // Constructing a linked list [1, 2, 3, 4, 5]
-const node_876_5 = new ListNode(5);
-const node_876_4 = new ListNode(4, node_876_5);
-const node_876_3 = new ListNode(3, node_876_4);
-const node_876_2 = new ListNode(2, node_876_3);
-const head_876 = new ListNode(1, node_876_2);
+const node_876_5 = new ListNode_876(5);
+const node_876_4 = new ListNode_876(4, node_876_5);
+const node_876_3 = new ListNode_876(3, node_876_4);
+const node_876_2 = new ListNode_876(2, node_876_3);
+const head_876 = new ListNode_876(1, node_876_2);
 
 console.log(middleNode(head_876)); // Output: Node with value 3
