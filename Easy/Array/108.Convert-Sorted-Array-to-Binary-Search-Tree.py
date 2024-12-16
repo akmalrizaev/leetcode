@@ -33,6 +33,8 @@ Binary Search Tree
 Binary Tree
 
 """
+from typing import List, Optional
+
 # Definition for a binary tree node.
 
 
@@ -43,35 +45,18 @@ class TreeNode:
         self.right = right
 
 
-def sortedArrayToBST(nums):
-    # Base case: empty array
-    if not nums:
-        return None
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        # Base case: if the array is empty, return None
+        if not nums:
+            return None
 
-    # Find the middle element
-    mid = len(nums) // 2
+        # Find the middle element to make it the root
+        mid = len(nums) // 2
+        root = TreeNode(nums[mid])
 
-    # Create a new tree node with the middle element
-    root = TreeNode(nums[mid])
+        # Recursively build the left and right subtrees
+        root.left = self.sortedArrayToBST(nums[:mid])  # Left half
+        root.right = self.sortedArrayToBST(nums[mid+1:])  # Right half
 
-    # Recursively construct the left and right subtrees
-    root.left = sortedArrayToBST(nums[:mid])  # Left part
-    root.right = sortedArrayToBST(nums[mid+1:])  # Right part
-
-    return root
-
-# Helper function to print the tree (inorder traversal)
-
-
-def inorder_traversal(root):
-    if root:
-        inorder_traversal(root.left)
-        print(root.val, end=" ")
-        inorder_traversal(root.right)
-
-
-# Example Usage
-nums = [-10, -3, 0, 5, 9]
-root = sortedArrayToBST(nums)
-print("Inorder Traversal of the BST:")
-inorder_traversal(root)
+        return root
