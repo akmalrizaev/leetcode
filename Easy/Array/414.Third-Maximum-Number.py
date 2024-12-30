@@ -59,3 +59,23 @@ class Solution:
         # Remove duplicates and sort
         unique_nums = sorted(set(nums), reverse=True)
         return unique_nums[2] if len(unique_nums) >= 3 else unique_nums[0]
+
+
+# Approach 2: Iterative Method (Without Sorting)
+class Solution:
+    def thirdMax(self, nums: List[int]) -> int:
+        first = second = third = float('-inf')
+        for num in nums:
+            if num in (first, second, third):  # Skip duplicates
+                continue
+            if num > first:
+                third = second
+                second = first
+                first = num
+            elif num > second:
+                third = second
+                second = num
+            elif num > third:
+                third = num
+
+        return third if third != float('-inf') else first
