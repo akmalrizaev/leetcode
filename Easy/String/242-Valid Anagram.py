@@ -1,4 +1,5 @@
 """
+242. Valid Anagram
 
 Given two strings s and t, return true if t is an 
 anagram
@@ -38,6 +39,17 @@ Sorting
 # Approach 1: Sort and Compare
 
 
+from collections import Counter
+
+
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         return sorted(s) == sorted(t)
+
+
+# Approach 2: Use a Hash Table (Frequency Count)
+
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return Counter(s) == Counter(t)
