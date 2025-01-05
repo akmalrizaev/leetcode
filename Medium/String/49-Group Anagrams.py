@@ -63,3 +63,18 @@ class Solution:
             anagrams[sorted_key].append(word)  # Group by the sorted key
 
         return list(anagrams.values())  # Return all groups of anagrams
+
+
+# Alternative Approach: Character Count Key
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        anagrams = defaultdict(list)
+
+        for word in strs:
+            count = [0] * 26  # Character count for each letter in 'a' to 'z'
+            for char in word:
+                count[ord(char) - ord('a')] += 1
+            # Use tuple of counts as the key
+            anagrams[tuple(count)].append(word)
+
+        return list(anagrams.values())
