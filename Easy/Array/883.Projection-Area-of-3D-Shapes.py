@@ -59,3 +59,29 @@ Math
 Geometry
 Matrix
 """
+
+from typing import List
+
+
+class Solution:
+    def projectionArea(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+
+        # Top view: Count non-zero cells
+        top_view = sum(1 for row in grid for cell in row if cell > 0)
+
+        # Front view: Maximum of each row
+        front_view = sum(max(row) for row in grid)
+
+        # Side view: Maximum of each column
+        side_view = sum(max(grid[i][j] for i in range(n)) for j in range(n))
+
+        # Total projection area
+        return top_view + front_view + side_view
+
+
+# Example usage
+solution = Solution()
+print(solution.projectionArea([[1, 2], [3, 4]]))  # Output: 17
+print(solution.projectionArea([[2]]))             # Output: 5
+print(solution.projectionArea([[1, 0], [0, 2]]))  # Output: 8
