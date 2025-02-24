@@ -36,3 +36,24 @@ Hash Table
 Binary Search
 Sorting
 """
+
+from typing import List
+
+
+class Solution:
+    def fairCandySwap(self, A: List[int], B: List[int]) -> List[int]:
+        sumA, sumB = sum(A), sum(B)
+        delta = (sumB - sumA) // 2
+        setB = set(B)
+
+        for x in A:
+            if x + delta in setB:
+                return [x, x + delta]
+
+
+# Example usage
+solution = Solution()
+print(solution.fairCandySwap([1, 1], [2, 2]))         # Output: [1, 2]
+print(solution.fairCandySwap([1, 2], [2, 3]))         # Output: [1, 2]
+print(solution.fairCandySwap([2], [1, 3]))            # Output: [2, 3]
+print(solution.fairCandySwap([1, 2, 5], [2, 4]))      # Output: [5, 4]
