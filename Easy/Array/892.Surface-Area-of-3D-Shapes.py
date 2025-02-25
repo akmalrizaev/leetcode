@@ -40,3 +40,33 @@ Math
 Geometry
 Matrix
 """
+
+from typing import List
+
+
+class Solution:
+    def surfaceArea(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        total_area = 0
+
+        for i in range(n):
+            for j in range(n):
+                if grid[i][j] > 0:
+                    # Add top and bottom surfaces
+                    total_area += 2
+
+                    # Add side surfaces for each direction
+                    for di, dj in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                        ni, nj = i + di, j + dj
+                        neighbor_height = grid[ni][nj] if 0 <= ni < n and 0 <= nj < n else 0
+                        total_area += max(grid[i][j] - neighbor_height, 0)
+
+        return total_area
+
+
+# Example usage
+solution = Solution()
+print(solution.surfaceArea([[2]]))                 # Output: 10
+print(solution.surfaceArea([[1, 2], [3, 4]]))     # Output: 34
+print(solution.surfaceArea([[1, 0], [0, 2]]))     # Output: 16
+print(solution.surfaceArea([[1, 1, 1], [1, 0, 1], [1, 1, 1]]))  # Output: 32
