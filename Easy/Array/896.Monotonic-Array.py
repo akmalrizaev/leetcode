@@ -31,3 +31,24 @@ Constraints:
 Topics
 Array
 """
+
+from typing import List
+
+
+class Solution:
+    def isMonotonic(self, nums: List[int]) -> bool:
+        increasing = all(nums[i] <= nums[i + 1] for i in range(len(nums) - 1))
+        decreasing = all(nums[i] >= nums[i + 1] for i in range(len(nums) - 1))
+        return increasing or decreasing
+
+
+# Example usage
+solution = Solution()
+# Output: True (Monotonically increasing)
+print(solution.isMonotonic([1, 2, 2, 3]))
+# Output: True (Monotonically decreasing)
+print(solution.isMonotonic([6, 5, 4, 4]))
+print(solution.isMonotonic([1, 3, 2]))     # Output: False (Not monotonic)
+print(solution.isMonotonic([1, 2, 4, 5]))  # Output: True
+# Output: True (Constant array is monotonic)
+print(solution.isMonotonic([1, 1, 1]))
