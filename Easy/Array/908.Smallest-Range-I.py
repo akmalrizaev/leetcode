@@ -38,3 +38,19 @@ Topics
 Array
 Math
 """
+
+from typing import List
+
+
+class Solution:
+    def smallestRangeI(self, nums: List[int], k: int) -> int:
+        max_val = max(nums)
+        min_val = min(nums)
+        return max(0, max_val - min_val - 2 * k)
+
+
+# Example usage
+solution = Solution()
+print(solution.smallestRangeI([1], 0))         # Output: 0
+print(solution.smallestRangeI([0, 10], 2))    # Output: 6
+print(solution.smallestRangeI([1, 3, 6], 3))  # Output: 0
