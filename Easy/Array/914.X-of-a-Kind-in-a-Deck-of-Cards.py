@@ -35,3 +35,24 @@ Math
 Counting
 Number Theory
 """
+
+from typing import List
+from collections import Counter
+from math import gcd
+from functools import reduce
+
+
+class Solution:
+    def hasGroupsSizeX(self, deck: List[int]) -> bool:
+        # Count the frequency of each card
+        count = Counter(deck).values()
+        # Compute the GCD of all frequencies
+        return reduce(gcd, count) >= 2
+
+
+# Example usage
+solution = Solution()
+print(solution.hasGroupsSizeX([1, 2, 3, 4, 4, 3, 2, 1]))  # Output: True
+print(solution.hasGroupsSizeX([1, 1, 1, 2, 2, 2, 3, 3]))  # Output: False
+print(solution.hasGroupsSizeX([1]))                      # Output: False
+print(solution.hasGroupsSizeX([1, 1, 2, 2, 2, 2]))       # Output: True
