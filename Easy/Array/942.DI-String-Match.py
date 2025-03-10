@@ -34,3 +34,31 @@ Two Pointers
 String
 Greedy
 """
+
+from typing import List
+
+
+class Solution:
+    def diStringMatch(self, s: str) -> List[int]:
+        low, high = 0, len(s)
+        perm = []
+
+        for char in s:
+            if char == 'I':
+                perm.append(low)
+                low += 1
+            else:  # char == 'D'
+                perm.append(high)
+                high -= 1
+
+        # Append the last remaining value
+        perm.append(low)
+        return perm
+
+
+# Example usage
+solution = Solution()
+# Output: [0, 4, 1, 3, 2] (or similar valid permutations)
+print(solution.diStringMatch("IDID"))
+print(solution.diStringMatch("III"))   # Output: [0, 1, 2, 3]
+print(solution.diStringMatch("DDI"))   # Output: [3, 2, 0, 1]
