@@ -54,3 +54,29 @@ Topics
 Array
 String
 """
+
+from typing import List
+
+
+class Solution:
+    def minDeletionSize(self, strs: List[str]) -> int:
+        deletions = 0
+        num_rows = len(strs)
+        num_cols = len(strs[0])
+
+        # Iterate through each column
+        for col in range(num_cols):
+            for row in range(1, num_rows):
+                # Check if column is not sorted
+                if strs[row][col] < strs[row - 1][col]:
+                    deletions += 1
+                    break
+
+        return deletions
+
+
+# Example usage
+solution = Solution()
+print(solution.minDeletionSize(["cba", "daf", "ghi"]))  # Output: 1
+print(solution.minDeletionSize(["a", "b"]))            # Output: 0
+print(solution.minDeletionSize(["zyx", "wvu", "tsr"]))  # Output: 3
