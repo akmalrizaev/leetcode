@@ -36,3 +36,36 @@ Array
 Hash Table
 String"
 """
+
+from typing import List
+
+
+class Solution:
+    def isAlienSorted(self, words: List[str], order: str) -> bool:
+        # Create a dictionary mapping each character to its rank
+        order_map = {char: i for i, char in enumerate(order)}
+
+        def is_sorted(w1: str, w2: str) -> bool:
+            for c1, c2 in zip(w1, w2):
+                if c1 != c2:
+                    # Compare the characters based on the alien order
+                    return order_map[c1] < order_map[c2]
+            # If all characters are the same, the shorter word should come first
+            return len(w1) <= len(w2)
+
+        # Check all adjacent word pairs
+        for i in range(len(words) - 1):
+            if not is_sorted(words[i], words[i + 1]):
+                return False
+
+        return True
+
+
+# Example usage
+solution = Solution()
+print(solution.isAlienSorted(["hello", "leetcode"],
+      "hlabcdefgijkmnopqrstuvwxyz"))  # Output: True
+print(solution.isAlienSorted(["word", "world", "row"],
+      "worldabcefghijkmnpqstuvxyz"))  # Output: False
+# Output: False
+print(solution.isAlienSorted(["apple", "app"], "abcdefghijklmnopqrstuvwxyz"))
