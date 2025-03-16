@@ -35,3 +35,21 @@ Topics
 Array
 Hash Table"
 """
+
+from typing import List
+
+
+class Solution:
+    def repeatedNTimes(self, nums: List[int]) -> int:
+        seen = set()
+        for num in nums:
+            if num in seen:
+                return num
+            seen.add(num)
+
+
+# Example usage
+solution = Solution()
+print(solution.repeatedNTimes([1, 2, 3, 3]))  # Output: 3
+print(solution.repeatedNTimes([2, 1, 2, 5, 3, 2]))  # Output: 2
+print(solution.repeatedNTimes([5, 1, 5, 2, 5, 3, 5, 4]))  # Output: 5
