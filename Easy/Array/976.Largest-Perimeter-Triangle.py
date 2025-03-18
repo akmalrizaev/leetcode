@@ -33,3 +33,26 @@ Greedy
 Sorting
 
 """
+
+from typing import List
+
+
+class Solution:
+    def largestPerimeter(self, nums: List[int]) -> int:
+        # Sort the array in descending order
+        nums.sort(reverse=True)
+
+        # Check each triplet
+        for i in range(len(nums) - 2):
+            if nums[i] < nums[i + 1] + nums[i + 2]:
+                return nums[i] + nums[i + 1] + nums[i + 2]
+
+        # If no valid triangle is found, return 0
+        return 0
+
+
+# Example usage
+solution = Solution()
+print(solution.largestPerimeter([2, 1, 2]))  # Output: 5
+print(solution.largestPerimeter([1, 2, 1]))  # Output: 0
+print(solution.largestPerimeter([3, 2, 3, 4]))  # Output: 10
