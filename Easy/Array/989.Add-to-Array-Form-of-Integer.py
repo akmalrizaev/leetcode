@@ -37,3 +37,45 @@ Array
 Math
 
 """
+
+from typing import List
+
+
+class Solution:
+    def addToArrayForm(self, num: List[int], k: int) -> List[int]:
+        carry = 0
+        result = []
+        n = len(num)
+
+        # Start adding from the least significant digit
+        for i in range(n - 1, -1, -1):
+            k_digit = k % 10
+            k //= 10
+
+            total = num[i] + k_digit + carry
+            carry = total // 10
+            result.append(total % 10)
+
+        # Add remaining digits of k
+        while k > 0:
+            k_digit = k % 10
+            k //= 10
+
+            total = k_digit + carry
+            carry = total // 10
+            result.append(total % 10)
+
+        # Handle remaining carry
+        if carry > 0:
+            result.append(carry)
+
+        # Reverse the result since we added digits in reverse order
+        return result[::-1]
+
+
+# Example usage
+solution = Solution()
+print(solution.addToArrayForm([1, 2, 0, 0], 34))  # Output: [1, 2, 3, 4]
+print(solution.addToArrayForm([2, 7, 4], 181))    # Output: [4, 5, 5]
+print(solution.addToArrayForm([2, 1, 5], 806))    # Output: [1, 0, 2, 1]
+print(solution.addToArrayForm([0], 10000))        # Output: [1, 0, 0, 0, 0]
