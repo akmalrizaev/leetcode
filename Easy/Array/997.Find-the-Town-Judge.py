@@ -43,3 +43,30 @@ Hash Table
 Graph
 
 """
+
+from typing import List
+
+
+class Solution:
+    def findJudge(self, N: int, trust: List[List[int]]) -> int:
+        # Initialize trust counts for 1 to N
+        trust_count = [0] * (N + 1)
+
+        for a, b in trust:
+            trust_count[a] -= 1  # a trusts someone
+            trust_count[b] += 1  # b is trusted by someone
+
+        # Find the judge
+        for i in range(1, N + 1):
+            if trust_count[i] == N - 1:
+                return i
+
+        return -1
+
+
+# Example usage
+solution = Solution()
+print(solution.findJudge(2, [[1, 2]]))             # Output: 2
+print(solution.findJudge(3, [[1, 3], [2, 3]]))    # Output: 3
+print(solution.findJudge(3, [[1, 2], [2, 3]]))    # Output: -1
+print(solution.findJudge(1, []))                  # Output: 1
