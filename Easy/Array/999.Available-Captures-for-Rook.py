@@ -68,3 +68,66 @@ Matrix
 Simulation
 
 """
+
+from typing import List
+
+
+class Solution:
+    def numRookCaptures(self, board: List[List[str]]) -> int:
+        # Locate the rook
+        rook_position = (-1, -1)
+        for i in range(8):
+            for j in range(8):
+                if board[i][j] == 'R':
+                    rook_position = (i, j)
+                    break
+            if rook_position != (-1, -1):
+                break
+
+        # Directions: up, down, left, right
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        captures = 0
+
+        # Simulate movement in each direction
+        for dx, dy in directions:
+            x, y = rook_position
+            while 0 <= x < 8 and 0 <= y < 8:
+                x += dx
+                y += dy
+                if not (0 <= x < 8 and 0 <= y < 8):  # Out of bounds
+                    break
+                if board[x][y] == 'B':  # Blocked by a bishop
+                    break
+                if board[x][y] == 'p':  # Captures a pawn
+                    captures += 1
+                    break
+
+        return captures
+
+
+# Example usage
+solution = Solution()
+
+board = [
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", "p", ".", ".", ".", "."],
+    [".", ".", ".", "R", ".", ".", ".", "p"],
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", "p", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."]
+]
+print(solution.numRookCaptures(board))  # Output: 3
+
+board = [
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", "p", ".", ".", ".", "."],
+    [".", ".", ".", "R", ".", ".", ".", "."],
+    [".", ".", ".", "B", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."]
+]
+print(solution.numRookCaptures(board))  # Output: 1
