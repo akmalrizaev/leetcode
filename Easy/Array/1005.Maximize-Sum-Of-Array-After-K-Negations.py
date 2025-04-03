@@ -38,3 +38,30 @@ Array
 Greedy
 Sorting
 """
+
+from typing import List
+
+
+class Solution:
+    def largestSumAfterKNegations(self, nums: List[int], k: int) -> int:
+        nums.sort()  # Step 1: Sort array
+
+        # Step 2: Negate the smallest negative numbers
+        for i in range(len(nums)):
+            if nums[i] < 0 and k > 0:
+                nums[i] = -nums[i]
+                k -= 1
+
+        # Step 3: If k is odd, flip the smallest element
+        if k % 2 == 1:
+            nums.sort()  # Re-sort to find the smallest element
+            nums[0] = -nums[0]
+
+        # Step 4: Compute and return the final sum
+        return sum(nums)
+
+
+solution = Solution()
+print(solution.largestSumAfterKNegations([4, 2, 3], 1))      # Output: 5
+print(solution.largestSumAfterKNegations([3, -1, 0, 2], 3))   # Output: 6
+print(solution.largestSumAfterKNegations([2, -3, -1, 5, -4], 2))  # Output: 13
