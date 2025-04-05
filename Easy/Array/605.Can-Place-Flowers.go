@@ -31,4 +31,32 @@ Topics
 Array
 Greedy
 
+Time & Space Complexity:
+Time Complexity: O(n) — Single pass through the array
+
+Space Complexity: O(1) — In-place, no extra space
+
 */
+
+package main
+
+func canPlaceFlowers(flowerbed []int, n int) bool {
+	for i := 0; i < len(flowerbed); i++ {
+		// Check if current plot is empty
+		if flowerbed[i] == 0 {
+			// Check left and right plots
+			emptyLeft := (i == 0) || (flowerbed[i-1] == 0)
+			emptyRight := (i == len(flowerbed)-1) || (flowerbed[i+1] == 0)
+
+			if emptyLeft && emptyRight {
+				flowerbed[i] = 1 // Plant a flower
+				n--              // One less flower to plant
+
+				if n == 0 {
+					return true
+				}
+			}
+		}
+	}
+	return n <= 0
+}
