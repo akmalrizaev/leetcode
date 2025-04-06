@@ -32,3 +32,22 @@ Topics
 Array
 Two Pointers
 */
+
+package main
+
+func moveZeroes(nums []int) {
+	insertPos := 0
+
+	// First pass: move non-zero values forward
+	for i := 0; i < len(nums); i++ {
+		if nums[i] != 0 {
+			nums[insertPos] = nums[i]
+			insertPos++
+		}
+	}
+
+	// Second pass: fill the rest with zeroes
+	for i := insertPos; i < len(nums); i++ {
+		nums[i] = 0
+	}
+}
