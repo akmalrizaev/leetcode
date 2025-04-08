@@ -35,4 +35,30 @@ Two Pointers
 String
 Dynamic Programming
 
+Time & Space Complexity:
+Time Complexity: O(n + m)
+
+n = length of s, m = length of t
+
+Single pass through both strings.
+
+Space Complexity: O(1)
+
+No extra memory used.
+
 */
+
+package main
+
+func isSubsequence(s string, t string) bool {
+	i, j := 0, 0
+
+	for i < len(s) && j < len(t) {
+		if s[i] == t[j] {
+			i++ // Move both pointers if characters match
+		}
+		j++ // Always move pointer for t
+	}
+
+	return i == len(s) // Check if we went through all characters in s
+}
