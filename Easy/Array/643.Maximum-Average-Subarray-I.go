@@ -33,3 +33,26 @@ Sliding Window
 
 */
 
+package main
+
+func findMaxAverage(nums []int, k int) float64 {
+	// Calculate the initial sum of the first k elements
+	currentSum := 0
+	for i := 0; i < k; i++ {
+		currentSum += nums[i]
+	}
+
+	// Initialize maxSum as the current sum
+	maxSum := currentSum
+
+	// Slide the window across the array
+	for i := k; i < len(nums); i++ {
+		currentSum += nums[i] - nums[i-k] // Add new element, remove old element
+		if currentSum > maxSum {
+			maxSum = currentSum
+		}
+	}
+
+	// Return the maximum average
+	return float64(maxSum) / float64(k)
+}
