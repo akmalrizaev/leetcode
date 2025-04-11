@@ -44,8 +44,36 @@ Constraints:
 
 Note: This question is the same as 1991: https://leetcode.com/problems/find-the-middle-index-in-array/
 
+Time & Space Complexity:
+
+Time Complexity: O(n) — One pass to calculate totalSum and another pass to find the pivot index.
+
+Space Complexity: O(1) — Constant space used.
+
 Topics
 Array
 Prefix Sum
 
+
+
 */
+
+package main
+
+func pivotIndex(nums []int) int {
+	totalSum := 0
+	for _, num := range nums {
+		totalSum += num
+	}
+
+	leftSum := 0
+	for i, num := range nums {
+		// Right sum = totalSum - leftSum - nums[i]
+		if leftSum == totalSum-leftSum-num {
+			return i
+		}
+		leftSum += num
+	}
+
+	return -1
+}
