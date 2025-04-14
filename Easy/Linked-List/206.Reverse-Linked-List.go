@@ -30,3 +30,24 @@ Linked List
 Recursion
 
 */
+
+package main
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func reverseList(head *ListNode) *ListNode {
+	var prev *ListNode
+	current := head
+
+	for current != nil {
+		next := current.Next // Save next node
+		current.Next = prev  // Reverse the link
+		prev = current       // Move prev forward
+		current = next       // Move current forward
+	}
+
+	return prev
+}
