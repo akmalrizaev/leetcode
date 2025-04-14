@@ -36,9 +36,35 @@ Constraints:
 2 <= cost.length <= 1000
 0 <= cost[i] <= 999
 
+Time & Space Complexity:
+
+Time Complexity: O(n) — Single loop through the cost array.
+
+Space Complexity: O(1) — Only two variables are used.
+
 Topics
 Array
 Dynamic Programming
 
 */
 
+package main
+
+func minCostClimbingStairs(cost []int) int {
+	n := len(cost)
+	prev2, prev1 := cost[0], cost[1] // Base cases
+
+	for i := 2; i < n; i++ {
+		current := cost[i] + min(prev1, prev2)
+		prev2, prev1 = prev1, current
+	}
+
+	return min(prev1, prev2)
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
