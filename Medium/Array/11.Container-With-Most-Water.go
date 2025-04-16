@@ -27,9 +27,48 @@ n == height.length
 2 <= n <= 105
 0 <= height[i] <= 104
 
+
 Topics
 Array
 Two Pointers
 Greedy
 
 */
+
+package main
+
+func maxArea(height []int) int {
+	left, right := 0, len(height)-1
+	maxArea := 0
+
+	for left < right {
+		// Calculate the area
+		width := right - left
+		h := min(height[left], height[right])
+		area := width * h
+		maxArea = max(maxArea, area)
+
+		// Move the pointer with the smaller height
+		if height[left] < height[right] {
+			left++
+		} else {
+			right--
+		}
+	}
+
+	return maxArea
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
