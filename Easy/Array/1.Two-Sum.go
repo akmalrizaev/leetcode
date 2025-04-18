@@ -41,3 +41,21 @@ Hash Table
 
 */
 
+func twoSum(nums []int, target int) []int {
+	// Map to store numbers and their indices
+	numMap := make(map[int]int)
+
+	for i, num := range nums {
+		complement := target - num
+
+		// Check if the complement exists in the map
+		if idx, found := numMap[complement]; found {
+			return []int{idx, i}
+		}
+
+		// Add current number to the map
+		numMap[num] = i
+	}
+
+	return nil // This won't be reached as per the problem's guarantee
+}
