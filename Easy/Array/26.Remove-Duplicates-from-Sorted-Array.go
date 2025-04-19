@@ -54,3 +54,22 @@ Array
 Two Pointers
 
 */
+
+package main
+
+func removeDuplicates(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
+	i := 1 // Pointer for the position of unique elements
+
+	for j := 1; j < len(nums); j++ {
+		if nums[j] != nums[j-1] {
+			nums[i] = nums[j]
+			i++
+		}
+	}
+
+	return i
+}
