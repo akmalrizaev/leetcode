@@ -59,3 +59,18 @@ Array
 Two Pointers
 
 */
+
+package main
+
+func removeElement(nums []int, val int) int {
+	k := 0 // Tracks position for non-val elements
+
+	for i := 0; i < len(nums); i++ {
+		if nums[i] != val {
+			nums[k] = nums[i]
+			k++
+		}
+	}
+
+	return k
+}
