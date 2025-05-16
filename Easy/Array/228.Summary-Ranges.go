@@ -48,3 +48,41 @@ Topics
 Array
 
 */
+
+package main
+
+import "fmt"
+
+func summaryRanges(nums []int) []string {
+	result := []string{}
+	n := len(nums)
+
+	if n == 0 {
+		return result
+	}
+
+	start := nums[0]
+
+	for i := 1; i < n; i++ {
+		// If the current number is not consecutive
+		if nums[i] != nums[i-1]+1 {
+			// Add the range to the result
+			if start == nums[i-1] {
+				result = append(result, fmt.Sprintf("%d", start))
+			} else {
+				result = append(result, fmt.Sprintf("%d->%d", start, nums[i-1]))
+			}
+			// Update the start of the next range
+			start = nums[i]
+		}
+	}
+
+	// Add the final range
+	if start == nums[n-1] {
+		result = append(result, fmt.Sprintf("%d", start))
+	} else {
+		result = append(result, fmt.Sprintf("%d->%d", start, nums[n-1]))
+	}
+
+	return result
+}
