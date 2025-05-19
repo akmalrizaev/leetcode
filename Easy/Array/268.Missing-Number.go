@@ -39,3 +39,17 @@ Constraints:
 Follow up: Could you implement a solution using only O(1) extra space complexity and O(n) runtime complexity?
 
 */
+
+package main
+
+func missingNumber(nums []int) int {
+	n := len(nums)
+	expectedSum := n * (n + 1) / 2
+	actualSum := 0
+
+	for _, num := range nums {
+		actualSum += num
+	}
+
+	return expectedSum - actualSum
+}
