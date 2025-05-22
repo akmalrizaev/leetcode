@@ -35,3 +35,30 @@ Binary Search
 Sorting
 
 */
+
+package main
+
+func intersection(nums1 []int, nums2 []int) []int {
+	set1 := make(map[int]bool)
+	result := make(map[int]bool)
+
+	// Add all elements of nums1 to set1
+	for _, num := range nums1 {
+		set1[num] = true
+	}
+
+	// Check elements of nums2 in set1
+	for _, num := range nums2 {
+		if set1[num] {
+			result[num] = true
+		}
+	}
+
+	// Convert result set to slice
+	output := []int{}
+	for num := range result {
+		output = append(output, num)
+	}
+
+	return output
+}
