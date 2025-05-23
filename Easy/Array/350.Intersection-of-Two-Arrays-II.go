@@ -37,3 +37,25 @@ Binary Search
 Sorting
 
 */
+
+package main
+
+func intersect(nums1 []int, nums2 []int) []int {
+	freqMap := make(map[int]int)
+	result := []int{}
+
+	// Count the frequency of elements in nums1
+	for _, num := range nums1 {
+		freqMap[num]++
+	}
+
+	// Check elements of nums2 in freqMap
+	for _, num := range nums2 {
+		if freqMap[num] > 0 {
+			result = append(result, num)
+			freqMap[num]--
+		}
+	}
+
+	return result
+}
