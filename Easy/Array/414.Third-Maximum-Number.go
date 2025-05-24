@@ -49,3 +49,35 @@ Array
 Sorting
 
 */
+
+package main
+
+func thirdMax(nums []int) int {
+	var first, second, third *int
+
+	for _, num := range nums {
+		// Check if the current number is already recorded
+		if (first != nil && *first == num) ||
+			(second != nil && *second == num) ||
+			(third != nil && *third == num) {
+			continue
+		}
+
+		if first == nil || num > *first {
+			third = second
+			second = first
+			first = &num
+		} else if second == nil || num > *second {
+			third = second
+			second = &num
+		} else if third == nil || num > *third {
+			third = &num
+		}
+	}
+
+	// Return the third maximum if it exists, otherwise return the maximum
+	if third != nil {
+		return *third
+	}
+	return *first
+}
