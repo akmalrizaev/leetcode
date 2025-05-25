@@ -33,3 +33,33 @@ Array
 Hash Table
 
 */
+
+package main
+
+func findDisappearedNumbers(nums []int) []int {
+	// Mark numbers in place
+	for _, num := range nums {
+		index := abs(num) - 1
+		if nums[index] > 0 {
+			nums[index] = -nums[index]
+		}
+	}
+
+	// Collect indices of positive numbers
+	result := []int{}
+	for i, num := range nums {
+		if num > 0 {
+			result = append(result, i+1)
+		}
+	}
+
+	return result
+}
+
+// Helper function to get absolute value
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
