@@ -33,6 +33,7 @@ Constraints:
     0 <= s.length <= 3 * 104
     1 <= g[i], s[j] <= 231 - 1
 
+
 Array
 Two Pointers
 Greedy
@@ -40,3 +41,26 @@ Sorting
 
 */
 
+package main
+
+import "sort"
+
+func findContentChildren(g []int, s []int) int {
+	// Sort greed factors and cookie sizes
+	sort.Ints(g)
+	sort.Ints(s)
+
+	child, cookie := 0, 0
+
+	// Use two pointers to assign cookies
+	for child < len(g) && cookie < len(s) {
+		if s[cookie] >= g[child] {
+			// Satisfy the current child
+			child++
+		}
+		// Move to the next cookie
+		cookie++
+	}
+
+	return child
+}
