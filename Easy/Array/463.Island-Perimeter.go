@@ -44,3 +44,29 @@ Breadth-First Search
 Matrix
 
 */
+
+package main
+
+func islandPerimeter(grid [][]int) int {
+	rows, cols := len(grid), len(grid[0])
+	perimeter := 0
+
+	for r := 0; r < rows; r++ {
+		for c := 0; c < cols; c++ {
+			if grid[r][c] == 1 {
+				// Add 4 for the current land cell
+				perimeter += 4
+
+				// Subtract 2 for each shared edge with another land cell
+				if r > 0 && grid[r-1][c] == 1 {
+					perimeter -= 2
+				}
+				if c > 0 && grid[r][c-1] == 1 {
+					perimeter -= 2
+				}
+			}
+		}
+	}
+
+	return perimeter
+}
