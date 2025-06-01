@@ -39,3 +39,30 @@ Array
 Simulation
 
 */
+
+package main
+
+func findPoisonedDuration(timeSeries []int, duration int) int {
+	if len(timeSeries) == 0 {
+		return 0
+	}
+
+	totalTime := 0
+
+	for i := 0; i < len(timeSeries)-1; i++ {
+		// Add the lesser of the duration or the gap between attacks
+		totalTime += min(duration, timeSeries[i+1]-timeSeries[i])
+	}
+
+	// Add the duration of the last attack
+	totalTime += duration
+
+	return totalTime
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
