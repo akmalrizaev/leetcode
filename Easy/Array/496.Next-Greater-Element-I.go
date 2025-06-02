@@ -48,3 +48,37 @@ Stack
 Monotonic Stack
 
 */
+
+package main
+
+func nextGreaterElement(nums1 []int, nums2 []int) []int {
+	// Map to store the next greater element for each number in nums2
+	nextGreater := make(map[int]int)
+	stack := []int{}
+
+	// Traverse nums2
+	for _, num := range nums2 {
+		// Maintain decreasing order in stack
+		for len(stack) > 0 && num > stack[len(stack)-1] {
+			top := stack[len(stack)-1]
+			stack = stack[:len(stack)-1] // Pop
+			nextGreater[top] = num
+		}
+		stack = append(stack, num) // Push current number
+	}
+
+	// For remaining elements in stack, there is no greater element
+	for len(stack) > 0 {
+		top := stack[len(stack)-1]
+		stack = stack[:len(stack)-1] // Pop
+		nextGreater[top] = -1
+	}
+
+	// Build result for nums1
+	result := make([]int, len(nums1))
+	for i, num := range nums1 {
+		result[i] = nextGreater[num]
+	}
+
+	return result
+}
