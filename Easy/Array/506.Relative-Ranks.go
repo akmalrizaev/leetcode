@@ -43,3 +43,41 @@ Sorting
 Heap (Priority Queue)
 
 */
+
+package main
+
+import (
+	"sort"
+	"strconv"
+)
+
+func findRelativeRanks(score []int) []string {
+	// Create a slice of tuples (score, index)
+	scoresWithIndices := make([][2]int, len(score))
+	for i, s := range score {
+		scoresWithIndices[i] = [2]int{s, i}
+	}
+
+	// Sort the tuples by score in descending order
+	sort.Slice(scoresWithIndices, func(i, j int) bool {
+		return scoresWithIndices[i][0] > scoresWithIndices[j][0]
+	})
+
+	// Create the result array
+	result := make([]string, len(score))
+	for rank, pair := range scoresWithIndices {
+		idx := pair[1]
+		switch rank {
+		case 0:
+			result[idx] = "Gold Medal"
+		case 1:
+			result[idx] = "Silver Medal"
+		case 2:
+			result[idx] = "Bronze Medal"
+		default:
+			result[idx] = strconv.Itoa(rank + 1)
+		}
+	}
+
+	return result
+}
