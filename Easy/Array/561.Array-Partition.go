@@ -38,3 +38,20 @@ Counting Sort
 
 
 */
+
+package main
+
+import "sort"
+
+func arrayPairSum(nums []int) int {
+	// Sort the array in ascending order
+	sort.Ints(nums)
+
+	// Sum up all even-indexed elements
+	sum := 0
+	for i := 0; i < len(nums); i += 2 {
+		sum += nums[i]
+	}
+
+	return sum
+}
