@@ -29,3 +29,30 @@ Matrix
 Simulation
 
 */
+
+package main
+
+func matrixReshape(mat [][]int, r int, c int) [][]int {
+	// Original dimensions
+	m := len(mat)
+	n := len(mat[0])
+
+	// Check if reshaping is possible
+	if m*n != r*c {
+		return mat
+	}
+
+	// Flatten the matrix
+	flat := make([]int, 0, m*n)
+	for _, row := range mat {
+		flat = append(flat, row...)
+	}
+
+	// Create the reshaped matrix
+	reshaped := make([][]int, r)
+	for i := 0; i < r; i++ {
+		reshaped[i] = flat[i*c : (i+1)*c]
+	}
+
+	return reshaped
+}
