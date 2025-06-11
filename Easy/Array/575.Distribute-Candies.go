@@ -39,3 +39,23 @@ Array
 Hash Table
 
 */
+
+package main
+
+func distributeCandies(candyType []int) int {
+	// Use a map to store unique candy types
+	uniqueTypes := make(map[int]struct{})
+	for _, candy := range candyType {
+		uniqueTypes[candy] = struct{}{}
+	}
+
+	// Calculate the maximum candies Alice can eat
+	maxCandies := len(candyType) / 2
+	uniqueCount := len(uniqueTypes)
+
+	// Return the smaller value
+	if uniqueCount < maxCandies {
+		return uniqueCount
+	}
+	return maxCandies
+}
