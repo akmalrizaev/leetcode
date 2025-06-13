@@ -38,3 +38,31 @@ Sorting
 Counting
 
 */
+
+package main
+
+func findLHS(nums []int) int {
+	// Frequency map to count occurrences
+	freq := make(map[int]int)
+	for _, num := range nums {
+		freq[num]++
+	}
+
+	// Find the longest harmonious subsequence
+	maxLength := 0
+	for key, count := range freq {
+		if nextCount, exists := freq[key+1]; exists {
+			maxLength = max(maxLength, count+nextCount)
+		}
+	}
+
+	return maxLength
+}
+
+// Helper function to find the maximum of two numbers
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
