@@ -38,3 +38,27 @@ Array
 Math
 
 */
+
+package main
+
+func maxCount(m int, n int, ops [][]int) int {
+	// Initialize minRow and minCol with the maximum possible values
+	minRow, minCol := m, n
+
+	// Update minRow and minCol based on the operations
+	for _, op := range ops {
+		minRow = min(minRow, op[0])
+		minCol = min(minCol, op[1])
+	}
+
+	// The maximum integer value's count is in the smallest rectangle
+	return minRow * minCol
+}
+
+// Helper function to calculate the minimum of two integers
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
