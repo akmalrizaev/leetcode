@@ -48,3 +48,34 @@ Hash Table
 String
 
 */
+
+package main
+
+func findRestaurant(list1 []string, list2 []string) []string {
+	// Create a map to store restaurant indices from list1
+	indexMap := make(map[string]int)
+	for i, restaurant := range list1 {
+		indexMap[restaurant] = i
+	}
+
+	// Variables to track the minimum index sum and result
+	minSum := int(^uint(0) >> 1) // Maximum integer value
+	result := []string{}
+
+	// Iterate through list2 to find common restaurants
+	for j, restaurant := range list2 {
+		if i, exists := indexMap[restaurant]; exists {
+			indexSum := i + j
+			if indexSum < minSum {
+				// New minimum index sum found
+				minSum = indexSum
+				result = []string{restaurant}
+			} else if indexSum == minSum {
+				// Tie for the minimum index sum
+				result = append(result, restaurant)
+			}
+		}
+	}
+
+	return result
+}
