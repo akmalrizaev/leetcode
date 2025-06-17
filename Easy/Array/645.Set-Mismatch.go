@@ -33,3 +33,32 @@ Bit Manipulation
 Sorting
 
 */
+
+package main
+
+func findErrorNums(nums []int) []int {
+	duplicate, missing := -1, -1
+	for _, num := range nums {
+		if nums[abs(num)-1] < 0 {
+			duplicate = abs(num)
+		} else {
+			nums[abs(num)-1] *= -1
+		}
+	}
+
+	for i, num := range nums {
+		if num > 0 {
+			missing = i + 1
+		}
+	}
+
+	return []int{duplicate, missing}
+}
+
+// Helper function to get the absolute value
+func abs(a int) int {
+	if a < 0 {
+		return -a
+	}
+	return a
+}
