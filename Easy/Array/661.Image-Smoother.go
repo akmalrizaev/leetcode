@@ -42,3 +42,36 @@ Array
 Matrix
 
 */
+
+package main
+
+func imageSmoother(img [][]int) [][]int {
+	rows, cols := len(img), len(img[0])
+	result := make([][]int, rows)
+	for i := range result {
+		result[i] = make([]int, cols)
+	}
+
+	// Directions to explore neighbors
+	directions := []struct{ dx, dy int }{
+		{-1, -1}, {-1, 0}, {-1, 1},
+		{0, -1}, {0, 0}, {0, 1},
+		{1, -1}, {1, 0}, {1, 1},
+	}
+
+	for r := 0; r < rows; r++ {
+		for c := 0; c < cols; c++ {
+			sum, count := 0, 0
+			for _, d := range directions {
+				nr, nc := r+d.dx, c+d.dy
+				if nr >= 0 && nr < rows && nc >= 0 && nc < cols {
+					sum += img[nr][nc]
+					count++
+				}
+			}
+			result[r][c] = sum / count
+		}
+	}
+
+	return result
+}
