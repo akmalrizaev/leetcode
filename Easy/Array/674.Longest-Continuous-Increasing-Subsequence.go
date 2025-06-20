@@ -32,3 +32,32 @@ Topics
 Array
 
 */
+
+package main
+
+func findLengthOfLCIS(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
+	maxLength, currentLength := 1, 1
+
+	for i := 1; i < len(nums); i++ {
+		if nums[i] > nums[i-1] {
+			currentLength++
+			maxLength = max(maxLength, currentLength)
+		} else {
+			currentLength = 1
+		}
+	}
+
+	return maxLength
+}
+
+// Helper function to find the maximum of two integers
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
