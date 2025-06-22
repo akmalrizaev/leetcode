@@ -67,3 +67,42 @@ Stack
 Simulation
 
 */
+
+package main
+
+import "strconv"
+
+func calPoints(ops []string) int {
+	stack := []int{}
+
+	for _, op := range ops {
+		switch op {
+		case "C":
+			// Invalidate the last score
+			stack = stack[:len(stack)-1]
+		case "D":
+			// Double the last score
+			stack = append(stack, stack[len(stack)-1]*2)
+		case "+":
+			// Sum the last two scores
+			stack = append(stack, stack[len(stack)-1]+stack[len(stack)-2])
+		default:
+			// Push the new score
+			score := atoi(op)
+			stack = append(stack, score)
+		}
+	}
+
+	// Calculate the total sum
+	total := 0
+	for _, score := range stack {
+		total += score
+	}
+	return total
+}
+
+// Helper function to convert string to integer
+func atoi(s string) int {
+	res, _ := strconv.Atoi(s)
+	return res
+}
