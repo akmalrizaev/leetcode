@@ -36,3 +36,41 @@ Array
 Hash Table
 
 */
+
+package main
+
+func findShortestSubarray(nums []int) int {
+	frequency := map[int]int{}
+	firstIndex := map[int]int{}
+	lastIndex := map[int]int{}
+
+	// Populate frequency, firstIndex, and lastIndex maps
+	for i, num := range nums {
+		if _, found := firstIndex[num]; !found {
+			firstIndex[num] = i
+		}
+		lastIndex[num] = i
+		frequency[num]++
+	}
+
+	// Find the degree of the array
+	degree := 0
+	for _, freq := range frequency {
+		if freq > degree {
+			degree = freq
+		}
+	}
+
+	// Find the minimum length of subarrays with the same degree
+	minLength := len(nums)
+	for num, freq := range frequency {
+		if freq == degree {
+			length := lastIndex[num] - firstIndex[num] + 1
+			if length < minLength {
+				minLength = length
+			}
+		}
+	}
+
+	return minLength
+}
