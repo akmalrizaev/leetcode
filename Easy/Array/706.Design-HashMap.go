@@ -45,3 +45,64 @@ Design
 Hash Function
 
 */
+
+package main
+
+type Pair struct {
+	Key   int
+	Value int
+}
+
+type MyHashMap struct {
+	buckets [][]Pair
+	size    int
+}
+
+func Constructor() MyHashMap {
+	return MyHashMap{
+		buckets: make([][]Pair, 769), // Use a prime number as the number of buckets
+		size:    769,
+	}
+}
+
+// Hash function to compute the index
+func (this *MyHashMap) hash(key int) int {
+	return key % this.size
+}
+
+// Put a key-value pair into the HashMap
+func (this *MyHashMap) Put(key int, value int) {
+	index := this.hash(key)
+	bucket := this.buckets[index]
+	for i, pair := range bucket {
+		if pair.Key == key {
+			this.buckets[index][i].Value = value // Update value if key exists
+			return
+		}
+	}
+	this.buckets[index] = append(bucket, Pair{Key: key, Value: value}) // Add new key-value pair
+}
+
+// Get the value for a key
+func (this *MyHashMap) Get(key int) int {
+	index := this.hash(key)
+	bucket := this.buckets[index]
+	for _, pair := range bucket {
+		if pair.Key == key {
+			return pair.Value
+		}
+	}
+	return -1 // Key not found
+}
+
+// Remove a key-value pair from the HashMap
+func (this *MyHashMap) Remove(key int) {
+	index := this.hash(key)
+	bucket := this.buckets[index]
+	for i, pair := range bucket {
+		if pair.Key == key {
+			this.buckets[index] = append(bucket[:i], bucket[i+1:]...) // Remove the key-value pair
+			return
+		}
+	}
+}
