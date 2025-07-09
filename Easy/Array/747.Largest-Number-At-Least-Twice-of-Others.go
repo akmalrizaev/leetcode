@@ -34,3 +34,26 @@ Array
 Sorting
 
 */
+
+package main
+
+func dominantIndex(nums []int) int {
+	if len(nums) == 0 {
+		return -1
+	}
+
+	maxIdx := 0
+	for i := 1; i < len(nums); i++ {
+		if nums[i] > nums[maxIdx] {
+			maxIdx = i
+		}
+	}
+
+	for i := 0; i < len(nums); i++ {
+		if i != maxIdx && nums[maxIdx] < 2*nums[i] {
+			return -1
+		}
+	}
+
+	return maxIdx
+}
