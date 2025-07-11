@@ -43,3 +43,48 @@ Hash Table
 String
 
 */
+
+package main
+
+import "unicode"
+
+func shortestCompletingWord(licensePlate string, words []string) string {
+	required := countLetters(licensePlate)
+	result := ""
+
+	for _, word := range words {
+		if isCompletingWord(required, word) {
+			if result == "" || len(word) < len(result) {
+				result = word
+			}
+		}
+	}
+
+	return result
+}
+
+// Count letter frequencies (a-z) from input string
+func countLetters(s string) [26]int {
+	var freq [26]int
+	for _, ch := range s {
+		if unicode.IsLetter(ch) {
+			freq[unicode.ToLower(ch)-'a']++
+		}
+	}
+	return freq
+}
+
+// Check if `word` satisfies the required frequency
+func isCompletingWord(required [26]int, word string) bool {
+	var wordFreq [26]int
+	for _, ch := range word {
+		wordFreq[ch-'a']++
+	}
+
+	for i := 0; i < 26; i++ {
+		if wordFreq[i] < required[i] {
+			return false
+		}
+	}
+	return true
+}
