@@ -45,3 +45,25 @@ Hash Table
 String
 
 */
+
+package main
+
+func uniqueMorseRepresentations(words []string) int {
+	morse := []string{
+		".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..",
+		".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.",
+		"...", "-", "..-", "...-", ".--", "-..-", "-.--", "--..",
+	}
+
+	seen := map[string]bool{}
+
+	for _, word := range words {
+		var code string
+		for _, ch := range word {
+			code += morse[ch-'a']
+		}
+		seen[code] = true
+	}
+
+	return len(seen)
+}
