@@ -44,3 +44,22 @@ Array
 String
 
 */
+
+package main
+
+func numberOfLines(widths []int, s string) []int {
+	lines := 1
+	currentWidth := 0
+
+	for _, ch := range s {
+		width := widths[ch-'a']
+		if currentWidth+width > 100 {
+			lines++
+			currentWidth = width
+		} else {
+			currentWidth += width
+		}
+	}
+
+	return []int{lines, currentWidth}
+}
