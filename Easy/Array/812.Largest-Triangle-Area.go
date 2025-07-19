@@ -30,3 +30,32 @@ Math
 Geometry
 
 */
+
+package main
+
+import "math"
+
+func largestTriangleArea(points [][]int) float64 {
+	maxArea := 0.0
+
+	for i := 0; i < len(points); i++ {
+		for j := i + 1; j < len(points); j++ {
+			for k := j + 1; k < len(points); k++ {
+				area := triangleArea(points[i], points[j], points[k])
+				if area > maxArea {
+					maxArea = area
+				}
+			}
+		}
+	}
+
+	return maxArea
+}
+
+func triangleArea(p1, p2, p3 []int) float64 {
+	x1, y1 := float64(p1[0]), float64(p1[1])
+	x2, y2 := float64(p2[0]), float64(p2[1])
+	x3, y3 := float64(p3[0]), float64(p3[1])
+
+	return 0.5 * math.Abs(x1*(y2-y3)+x2*(y3-y1)+x3*(y1-y2))
+}
