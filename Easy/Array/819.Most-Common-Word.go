@@ -40,3 +40,53 @@ String
 Counting
 
 */
+
+package main
+
+import (
+	"strings"
+	"unicode"
+)
+
+func mostCommonWord(paragraph string, banned []string) string {
+	bannedSet := make(map[string]bool)
+	for _, word := range banned {
+		bannedSet[word] = true
+	}
+
+	wordFreq := make(map[string]int)
+	word := strings.Builder{}
+
+	// Normalize paragraph: remove punctuations, lowercase
+	for i, ch := range paragraph {
+		if unicode.IsLetter(ch) {
+			word.WriteRune(unicode.ToLower(ch))
+		} else if word.Len() > 0 {
+			w := word.String()
+			if !bannedSet[w] {
+				wordFreq[w]++
+			}
+			word.Reset()
+		}
+	}
+
+	// Handle last word if paragraph doesn't end with punctuation
+	if word.Len() > 0 {
+		w := word.String()
+		if !bannedSet[w] {
+			wordFreq[w]++
+		}
+	}
+
+	// Find the word with the highest frequency
+	maxCount := 0
+	res := ""
+	for w, count := range wordFreq {
+		if count > maxCount {
+			maxCount = count
+			res = w
+		}
+	}
+
+	return res
+}
