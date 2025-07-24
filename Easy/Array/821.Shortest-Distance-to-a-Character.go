@@ -35,3 +35,32 @@ Array
 Two Pointers
 String
 */
+
+package main
+
+func shortestToChar(s string, c byte) []int {
+	n := len(s)
+	res := make([]int, n)
+
+	// 1st pass: left to right
+	prev := -n // use a large negative value
+	for i := 0; i < n; i++ {
+		if s[i] == c {
+			prev = i
+		}
+		res[i] = i - prev
+	}
+
+	// 2nd pass: right to left
+	prev = 2 * n // use a large value
+	for i := n - 1; i >= 0; i-- {
+		if s[i] == c {
+			prev = i
+		}
+		if prev-i < res[i] {
+			res[i] = prev - i
+		}
+	}
+
+	return res
+}
