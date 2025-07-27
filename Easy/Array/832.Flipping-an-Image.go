@@ -41,3 +41,18 @@ Matrix
 Simulation
 
 */
+
+package main
+
+func flipAndInvertImage(image [][]int) [][]int {
+	for i := 0; i < len(image); i++ {
+		row := image[i]
+		n := len(row)
+
+		for j := 0; j <= (n-1)/2; j++ {
+			// Swap and invert
+			row[j], row[n-1-j] = row[n-1-j]^1, row[j]^1
+		}
+	}
+	return image
+}
