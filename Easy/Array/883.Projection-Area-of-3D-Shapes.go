@@ -61,3 +61,32 @@ Geometry
 Matrix
 
 */
+
+package main
+
+func projectionArea(grid [][]int) int {
+	n := len(grid)
+	xy, yz, zx := 0, 0, 0
+
+	for i := 0; i < n; i++ {
+		rowMax, colMax := 0, 0
+		for j := 0; j < n; j++ {
+			if grid[i][j] > 0 {
+				xy++
+			}
+			rowMax = max(rowMax, grid[i][j])
+			colMax = max(colMax, grid[j][i])
+		}
+		zx += rowMax
+		yz += colMax
+	}
+
+	return xy + yz + zx
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
