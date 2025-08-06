@@ -38,3 +38,28 @@ Binary Search
 Sorting
 
 */
+
+package main
+
+func fairCandySwap(A []int, B []int) []int {
+	sumA, sumB := 0, 0
+	setB := make(map[int]bool)
+
+	for _, a := range A {
+		sumA += a
+	}
+	for _, b := range B {
+		sumB += b
+		setB[b] = true
+	}
+
+	delta := (sumB - sumA) / 2
+
+	for _, a := range A {
+		if setB[a+delta] {
+			return []int{a, a + delta}
+		}
+	}
+
+	return nil
+}
