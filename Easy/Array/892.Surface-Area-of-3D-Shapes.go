@@ -34,6 +34,10 @@ n == grid.length == grid[i].length
 1 <= n <= 50
 0 <= grid[i][j] <= 50
 
+Complexity
+Time: O(n²) — one constant-time pass over the grid.
+Space: O(1) — just a few scalars.
+
 Topics
 Array
 Math
@@ -41,3 +45,45 @@ Geometry
 Matrix
 
 */
+
+package main
+
+func surfaceArea(grid [][]int) int {
+	n := len(grid)
+	area := 0
+
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			h := grid[i][j]
+			if h == 0 {
+				continue
+			}
+
+			// Each cube contributes 6 faces
+			area += 6 * h
+
+			// Faces hidden inside the same stack
+			area -= 2 * (h - 1)
+
+			// Faces shared with the top neighbor
+			if i > 0 {
+				shared := min(h, grid[i-1][j])
+				area -= 2 * shared
+			}
+
+			// Faces shared with the left neighbor
+			if j > 0 {
+				shared := min(h, grid[i][j-1])
+				area -= 2 * shared
+			}
+		}
+	}
+	return area
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
