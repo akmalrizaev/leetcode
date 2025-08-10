@@ -32,4 +32,35 @@ Constraints:
 Topics
 Array
 
+Time Complexity
+O(n) → one pass through array.
+
+O(1) extra space.
+
 */
+
+package main
+
+import "fmt"
+
+func isMonotonic(nums []int) bool {
+	increasing := true
+	decreasing := true
+
+	for i := 1; i < len(nums); i++ {
+		if nums[i] > nums[i-1] {
+			decreasing = false
+		}
+		if nums[i] < nums[i-1] {
+			increasing = false
+		}
+	}
+
+	return increasing || decreasing
+}
+
+func main() {
+	fmt.Println(isMonotonic([]int{1, 2, 2, 3})) // true
+	fmt.Println(isMonotonic([]int{6, 5, 4, 4})) // true
+	fmt.Println(isMonotonic([]int{1, 3, 2}))    // false
+}
