@@ -39,4 +39,40 @@ Topics
 Array
 Math
 
+⏱ Time Complexity: O(n) (just scanning once)
+📦 Space Complexity: O(1)
+
 */
+
+package main
+
+import (
+	"fmt"
+)
+
+func smallestRangeI(nums []int, k int) int {
+	minVal, maxVal := nums[0], nums[0]
+
+	// Find min and max in nums
+	for _, num := range nums {
+		if num < minVal {
+			minVal = num
+		}
+		if num > maxVal {
+			maxVal = num
+		}
+	}
+
+	// The max difference after adjusting by k
+	diff := maxVal - minVal - 2*k
+	if diff < 0 {
+		return 0
+	}
+	return diff
+}
+
+func main() {
+	fmt.Println(smallestRangeI([]int{1}, 0))       // 0
+	fmt.Println(smallestRangeI([]int{0, 10}, 2))   // 6
+	fmt.Println(smallestRangeI([]int{1, 3, 6}, 3)) // 0
+}
