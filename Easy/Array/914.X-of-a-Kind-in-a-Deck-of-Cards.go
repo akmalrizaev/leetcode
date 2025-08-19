@@ -37,3 +37,40 @@ Counting
 Number Theory
 
 */
+
+package main
+
+import (
+	"fmt"
+)
+
+// Helper function: greatest common divisor
+func gcd(a, b int) int {
+	for b != 0 {
+		a, b = b, a%b
+	}
+	return a
+}
+
+func hasGroupsSizeX(deck []int) bool {
+	// Count frequency of each card
+	counts := make(map[int]int)
+	for _, card := range deck {
+		counts[card]++
+	}
+
+	// Compute gcd of all counts
+	g := 0
+	for _, c := range counts {
+		g = gcd(g, c)
+	}
+
+	return g >= 2
+}
+
+func main() {
+	fmt.Println(hasGroupsSizeX([]int{1, 2, 3, 4, 4, 3, 2, 1})) // true
+	fmt.Println(hasGroupsSizeX([]int{1, 1, 1, 2, 2, 2, 3, 3})) // false
+	fmt.Println(hasGroupsSizeX([]int{1}))                      // false
+	fmt.Println(hasGroupsSizeX([]int{1, 1}))                   // true
+}
