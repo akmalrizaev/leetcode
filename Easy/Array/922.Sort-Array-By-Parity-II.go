@@ -28,9 +28,31 @@ nums.length is even.
 Half of the integers in nums are even.
 0 <= nums[i] <= 1000
 
+⏱ Time Complexity: O(n)
+📦 Space Complexity: O(n) (we used a new slice res)
+
 Topics
 Array
 Two Pointers
 Sorting
 
 */
+
+package main
+
+func sortArrayByParityII(nums []int) []int {
+	n := len(nums)
+	res := make([]int, n)
+
+	even, odd := 0, 1
+	for _, num := range nums {
+		if num%2 == 0 {
+			res[even] = num
+			even += 2
+		} else {
+			res[odd] = num
+			odd += 2
+		}
+	}
+	return res
+}
