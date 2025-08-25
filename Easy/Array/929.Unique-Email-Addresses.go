@@ -39,9 +39,39 @@ Local names do not start with a '+' character.
 Domain names end with the ".com" suffix.
 Domain names must contain at least one character before ".com" suffix.
 
+⏱ Time Complexity: O(n·m) (n = number of emails, m = average length of email)
+📦 Space Complexity: O(n)
+
 Topics
 Array
 Hash Table
 String
 
 */
+
+package main
+
+import "strings"
+
+func numUniqueEmails(emails []string) int {
+	unique := make(map[string]bool)
+
+	for _, email := range emails {
+		parts := strings.Split(email, "@")
+		local := parts[0]
+		domain := parts[1]
+
+		// ignore substring after '+'
+		if idx := strings.Index(local, "+"); idx != -1 {
+			local = local[:idx]
+		}
+
+		// remove all dots
+		local = strings.ReplaceAll(local, ".", "")
+
+		normalized := local + "@" + domain
+		unique[normalized] = true
+	}
+
+	return len(unique)
+}
