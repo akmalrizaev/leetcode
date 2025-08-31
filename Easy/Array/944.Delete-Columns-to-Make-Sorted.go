@@ -56,3 +56,25 @@ Array
 String
 
 */
+
+package main
+
+func minDeletionSize(strs []string) int {
+	if len(strs) == 0 {
+		return 0
+	}
+
+	rows, cols := len(strs), len(strs[0])
+	deletions := 0
+
+	// Check each column
+	for c := 0; c < cols; c++ {
+		for r := 1; r < rows; r++ {
+			if strs[r][c] < strs[r-1][c] {
+				deletions++
+				break
+			}
+		}
+	}
+	return deletions
+}
