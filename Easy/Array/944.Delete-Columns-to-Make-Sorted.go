@@ -55,6 +55,9 @@ Topics
 Array
 String
 
+⏱ Time Complexity: O(n)
+📦 Space Complexity: O(1) (ignoring output array)
+
 */
 
 package main
