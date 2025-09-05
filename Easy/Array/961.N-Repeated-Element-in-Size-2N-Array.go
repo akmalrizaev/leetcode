@@ -40,3 +40,17 @@ Hash Table
 📦 Space Complexity: O(n)
 
 */
+
+package main
+
+func repeatedNTimes(nums []int) int {
+	seen := make(map[int]bool)
+
+	for _, num := range nums {
+		if seen[num] {
+			return num
+		}
+		seen[num] = true
+	}
+	return -1 // should never reach here
+}
