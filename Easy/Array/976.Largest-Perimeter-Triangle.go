@@ -33,4 +33,26 @@ Math
 Greedy
 Sorting
 
+⏱ Time Complexity: O(n log n) (sorting dominates)
+📦 Space Complexity: O(1)
+
 */
+
+package main
+
+import (
+	"sort"
+)
+
+func largestPerimeter(nums []int) int {
+	// Sort in ascending order
+	sort.Ints(nums)
+
+	// Check from largest side
+	for i := len(nums) - 1; i >= 2; i-- {
+		if nums[i-2]+nums[i-1] > nums[i] {
+			return nums[i-2] + nums[i-1] + nums[i]
+		}
+	}
+	return 0
+}
