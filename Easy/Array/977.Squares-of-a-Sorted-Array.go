@@ -32,4 +32,32 @@ Array
 Two Pointers
 Sorting
 
+⏱ Time Complexity: O(n log n) (sorting dominates)
+📦 Space Complexity: O(1)
+
 */
+
+package main
+
+func sortedSquares(nums []int) []int {
+	n := len(nums)
+	res := make([]int, n)
+
+	left, right := 0, n-1
+	pos := n - 1
+
+	for left <= right {
+		leftSq := nums[left] * nums[left]
+		rightSq := nums[right] * nums[right]
+
+		if leftSq > rightSq {
+			res[pos] = leftSq
+			left++
+		} else {
+			res[pos] = rightSq
+			right--
+		}
+		pos--
+	}
+	return res
+}
