@@ -37,4 +37,31 @@ Topics
 Array
 Math
 
+⏱ Time Complexity: O(n)
+📦 Space Complexity: O(n) (for result array)
+
 */
+
+package main
+
+func addToArrayForm(num []int, k int) []int {
+	res := []int{}
+	n := len(num)
+	i := n - 1
+	carry := k
+
+	for i >= 0 || carry > 0 {
+		if i >= 0 {
+			carry += num[i]
+			i--
+		}
+		res = append(res, carry%10)
+		carry /= 10
+	}
+
+	// reverse result since we built it backwards
+	for l, r := 0, len(res)-1; l < r; l, r = l+1, r-1 {
+		res[l], res[r] = res[r], res[l]
+	}
+	return res
+}
