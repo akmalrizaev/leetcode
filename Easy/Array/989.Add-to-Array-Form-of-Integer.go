@@ -37,7 +37,7 @@ Topics
 Array
 Math
 
-⏱ Time Complexity: O(n)
+⏱ Time Complexity: O(n + log k)
 📦 Space Complexity: O(n) (for result array)
 
 */
