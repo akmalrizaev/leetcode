@@ -43,4 +43,31 @@ Array
 Hash Table
 Graph
 
+⏱ Time Complexity: O(n + m), where m = len(trust)
+📦 Space Complexity: O(n)
+
 */
+
+package main
+
+func findJudge(n int, trust [][]int) int {
+	// indegree[i] = how many people trust i
+	// outdegree[i] = how many people i trusts
+	indegree := make([]int, n+1)
+	outdegree := make([]int, n+1)
+
+	for _, t := range trust {
+		a, b := t[0], t[1]
+		outdegree[a]++
+		indegree[b]++
+	}
+
+	for i := 1; i <= n; i++ {
+		// Judge trusts nobody → outdegree[i] == 0
+		// Everyone else trusts Judge → indegree[i] == n-1
+		if outdegree[i] == 0 && indegree[i] == n-1 {
+			return i
+		}
+	}
+	return -1
+}
