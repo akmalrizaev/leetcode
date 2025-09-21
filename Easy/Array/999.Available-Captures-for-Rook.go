@@ -68,31 +68,81 @@ Array
 Matrix
 Simulation
 
-⏱ Time Complexity: O(n + m), where m = len(trust)
-📦 Space Complexity: O(n)
+⏱ Time Complexity: O(1) (since board is always 8×8, constant size)
+📦 Space Complexity: O(1)
 
 */
 
 package main
 
-func findJudge(n int, trust [][]int) int {
-	// indegree[i] = how many people trust i
-	// outdegree[i] = how many people i trusts
-	indegree := make([]int, n+1)
-	outdegree := make([]int, n+1)
+import "fmt"
 
-	for _, t := range trust {
-		a, b := t[0], t[1]
-		outdegree[a]++
-		indegree[b]++
-	}
-
-	for i := 1; i <= n; i++ {
-		// Judge trusts nobody → outdegree[i] == 0
-		// Everyone else trusts Judge → indegree[i] == n-1
-		if outdegree[i] == 0 && indegree[i] == n-1 {
-			return i
+func numRookCaptures(board [][]byte) int {
+	// Step 1: Find the position of the rook 'R'
+	var rookRow, rookCol int
+	found := false
+	for i := 0; i < 8 && !found; i++ {
+		for j := 0; j < 8; j++ {
+			if board[i][j] == 'R' {
+				rookRow, rookCol = i, j
+				found = true
+				break
+			}
 		}
 	}
-	return -1
+
+	// Step 2: Check in 4 directions (up, down, left, right)
+	directions := [][]int{
+		{-1, 0}, // up
+		{1, 0},  // down
+		{0, -1}, // left
+		{0, 1},  // right
+	}
+
+	captures := 0
+
+	for _, d := range directions {
+		r, c := rookRow, rookCol
+		for {
+			r += d[0]
+			c += d[1]
+			if r < 0 || r >= 8 || c < 0 || c >= 8 || board[r][c] == 'B' {
+				// Out of bounds or bishop blocks the way
+				break
+			}
+			if board[r][c] == 'p' {
+				// Can capture a pawn
+				captures++
+				break
+			}
+		}
+	}
+
+	return captures
+}
+
+func main() {
+	board1 := [][]byte{
+		{'.', '.', '.', '.', '.', '.', '.', '.'},
+		{'.', '.', '.', 'p', '.', '.', '.', '.'},
+		{'.', '.', '.', 'R', '.', '.', '.', 'p'},
+		{'.', '.', '.', '.', '.', '.', '.', '.'},
+		{'.', '.', '.', '.', '.', '.', '.', '.'},
+		{'.', '.', '.', 'p', '.', '.', '.', '.'},
+		{'.', '.', '.', '.', '.', '.', '.', '.'},
+		{'.', '.', '.', '.', '.', '.', '.', '.'},
+	}
+	fmt.Println(numRookCaptures(board1)) // 3
+
+	board2 := [][]byte{
+		{'.', '.', '.', '.', '.', '.', '.', '.'},
+		{'.', 'p', 'p', 'p', 'p', 'p', '.', '.'},
+		{'.', 'p', 'p', 'B', 'p', 'p', '.', '.'},
+		{'.', 'p', 'B', 'R', 'B', 'p', '.', '.'},
+		{'.', 'p', 'p', 'B', 'p', 'p', '.', '.'},
+		{'.', 'p', 'p', 'p', 'p', 'p', '.', '.'},
+		{'.', '.', '.', '.', '.', '.', '.', '.'},
+		{'.', '.', '.', '.', '.', '.', '.', '.'},
+	}
+	fmt.Println(numRookCaptures(board2)) // 0
 }
