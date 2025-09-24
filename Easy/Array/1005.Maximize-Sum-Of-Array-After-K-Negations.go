@@ -39,4 +39,49 @@ Array
 Greedy
 Sorting
 
+⏱ Time Complexity: O(n log n) (due to sorting)
+📦 Space Complexity: O(1)
+
 */
+
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func largestSumAfterKNegations(nums []int, k int) int {
+	// Step 1: Sort the array
+	sort.Ints(nums)
+
+	// Step 2: Flip as many negative numbers as possible
+	for i := 0; i < len(nums) && k > 0; i++ {
+		if nums[i] < 0 {
+			nums[i] = -nums[i]
+			k--
+		}
+	}
+
+	// Step 3: If k > 0, handle remaining flips
+	// Sort again to make smallest number at front
+	sort.Ints(nums)
+
+	if k%2 == 1 {
+		// Flip the smallest element once more
+		nums[0] = -nums[0]
+	}
+
+	// Step 4: Compute final sum
+	sum := 0
+	for _, num := range nums {
+		sum += num
+	}
+	return sum
+}
+
+func main() {
+	fmt.Println(largestSumAfterKNegations([]int{4, 2, 3}, 1))          // 5
+	fmt.Println(largestSumAfterKNegations([]int{3, -1, 0, 2}, 3))      // 6
+	fmt.Println(largestSumAfterKNegations([]int{2, -3, -1, 5, -4}, 2)) // 13
+}
