@@ -32,4 +32,33 @@ Topics
 Array
 Bit Manipulation
 
+⏱ Complexity
+
+Time: O(n) (one pass)
+
+Space: O(n) (result array)
+
 */
+
+package main
+
+import "fmt"
+
+func prefixesDivBy5(nums []int) []bool {
+	result := make([]bool, len(nums))
+	num := 0
+
+	for i, bit := range nums {
+		// Shift left (multiply by 2) and add current bit
+		num = (num*2 + bit) % 5 // keep modulo 5 to avoid overflow
+		result[i] = (num == 0)
+	}
+
+	return result
+}
+
+func main() {
+	fmt.Println(prefixesDivBy5([]int{0, 1, 1}))       // [true false false]
+	fmt.Println(prefixesDivBy5([]int{1, 0, 1}))       // [false false true]
+	fmt.Println(prefixesDivBy5([]int{1, 1, 1, 0, 1})) // [false false false false false]
+}
