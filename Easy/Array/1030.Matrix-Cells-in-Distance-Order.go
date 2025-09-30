@@ -42,4 +42,50 @@ Geometry
 Sorting
 Matrix
 
+⏱ Complexity
+
+Time: O(n log n), where n = rows*cols (due to sorting).
+
+Space: O(n).
+
 */
+
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func allCellsDistOrder(rows int, cols int, rCenter int, cCenter int) [][]int {
+	result := make([][]int, 0, rows*cols)
+
+	// Step 1: collect all cells
+	for r := 0; r < rows; r++ {
+		for c := 0; c < cols; c++ {
+			result = append(result, []int{r, c})
+		}
+	}
+
+	// Step 2: sort by Manhattan distance
+	sort.Slice(result, func(i, j int) bool {
+		d1 := abs(result[i][0]-rCenter) + abs(result[i][1]-cCenter)
+		d2 := abs(result[j][0]-rCenter) + abs(result[j][1]-cCenter)
+		return d1 < d2
+	})
+
+	return result
+}
+
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+func main() {
+	fmt.Println(allCellsDistOrder(1, 2, 0, 0)) // [[0 0] [0 1]]
+	fmt.Println(allCellsDistOrder(2, 2, 0, 1)) // [[0 1] [0 0] [1 1] [1 0]]
+	fmt.Println(allCellsDistOrder(2, 3, 1, 2)) // [[1 2] [0 2] [1 1] [0 1] [1 0] [0 0]]
+}
