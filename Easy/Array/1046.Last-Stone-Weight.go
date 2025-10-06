@@ -38,4 +38,66 @@ Topics
 Array
 Heap (Priority Queue)
 
+⏱ Complexity
+
+Time: O(n log n) — each heap operation costs log n
+
+Space: O(n)
+
 */
+
+package main
+
+import (
+	"container/heap"
+	"fmt"
+)
+
+// MaxHeap implementation
+type MaxHeap []int
+
+func (h MaxHeap) Len() int           { return len(h) }
+func (h MaxHeap) Less(i, j int) bool { return h[i] > h[j] } // reverse for max-heap
+func (h MaxHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+func (h *MaxHeap) Push(x interface{}) {
+	*h = append(*h, x.(int))
+}
+
+func (h *MaxHeap) Pop() interface{} {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[:n-1]
+	return x
+}
+
+func lastStoneWeight(stones []int) int {
+	h := &MaxHeap{}
+	heap.Init(h)
+
+	// Step 1: push all stones into max-heap
+	for _, s := range stones {
+		heap.Push(h, s)
+	}
+
+	// Step 2: simulate the smashing
+	for h.Len() > 1 {
+		y := heap.Pop(h).(int) // heaviest
+		x := heap.Pop(h).(int) // second heaviest
+		if y != x {
+			heap.Push(h, y-x)
+		}
+	}
+
+	if h.Len() == 0 {
+		return 0
+	}
+	return heap.Pop(h).(int)
+}
+
+func main() {
+	fmt.Println(lastStoneWeight([]int{2, 7, 4, 1, 8, 1})) // 1
+	fmt.Println(lastStoneWeight([]int{1}))                // 1
+	fmt.Println(lastStoneWeight([]int{3, 7, 8}))          // 2
+}
