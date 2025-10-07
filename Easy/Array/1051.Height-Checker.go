@@ -47,3 +47,34 @@ Sorting
 Counting Sort
 
 */
+
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func heightChecker(heights []int) int {
+	// Step 1: Make a copy of the array
+	expected := make([]int, len(heights))
+	copy(expected, heights)
+
+	// Step 2: Sort the copied array
+	sort.Ints(expected)
+
+	// Step 3: Count mismatches
+	count := 0
+	for i := range heights {
+		if heights[i] != expected[i] {
+			count++
+		}
+	}
+	return count
+}
+
+func main() {
+	fmt.Println(heightChecker([]int{1, 1, 4, 2, 1, 3})) // 3
+	fmt.Println(heightChecker([]int{5, 1, 2, 3, 4}))    // 5
+	fmt.Println(heightChecker([]int{1, 2, 3, 4, 5}))    // 0
+}
