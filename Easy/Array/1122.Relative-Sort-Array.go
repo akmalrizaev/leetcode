@@ -31,6 +31,12 @@ Hash Table
 Sorting
 Counting Sort
 
+⏱ Complexity
+
+Time: O(n log n) — for sorting
+
+Space: O(m) — for the order map (m = len(arr2))
+
 */
 
 package main
