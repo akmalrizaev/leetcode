@@ -32,3 +32,50 @@ Sorting
 Counting Sort
 
 */
+
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func relativeSortArray(arr1 []int, arr2 []int) []int {
+	// Step 1: Map each element in arr2 to its index (order)
+	order := make(map[int]int)
+	for i, val := range arr2 {
+		order[val] = i
+	}
+
+	// Step 2: Sort arr1 with a custom comparator
+	sort.Slice(arr1, func(i, j int) bool {
+		// If both in arr2 → compare their order
+		iOrder, iExists := order[arr1[i]]
+		jOrder, jExists := order[arr1[j]]
+
+		if iExists && jExists {
+			return iOrder < jOrder
+		}
+		// If only one exists in arr2 → that one comes first
+		if iExists {
+			return true
+		}
+		if jExists {
+			return false
+		}
+		// Otherwise → normal ascending order
+		return arr1[i] < arr1[j]
+	})
+
+	return arr1
+}
+
+func main() {
+	arr1 := []int{2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19}
+	arr2 := []int{2, 1, 4, 3, 9, 6}
+	fmt.Println(relativeSortArray(arr1, arr2)) // [2 2 2 1 4 3 3 9 6 7 19]
+
+	arr3 := []int{28, 6, 22, 8, 44, 17}
+	arr4 := []int{22, 28, 8, 6}
+	fmt.Println(relativeSortArray(arr3, arr4)) // [22 28 8 6 17 44]
+}
