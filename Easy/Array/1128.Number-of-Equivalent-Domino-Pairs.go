@@ -29,4 +29,40 @@ Array
 Hash Table
 Counting
 
+⏱ Complexity
+
+Time: O(n)
+
+Space: O(1) (since domino values are between 1–9, only 100 possible keys)
+
 */
+
+package main
+
+import "fmt"
+
+func numEquivDominoPairs(dominoes [][]int) int {
+	count := make(map[int]int)
+	result := 0
+
+	for _, d := range dominoes {
+		// Normalize the domino (smaller number first)
+		a, b := d[0], d[1]
+		if a > b {
+			a, b = b, a
+		}
+		// Create a unique key
+		key := a*10 + b
+
+		// Each time we see this key again, it forms pairs with all previous ones
+		result += count[key]
+		count[key]++
+	}
+
+	return result
+}
+
+func main() {
+	fmt.Println(numEquivDominoPairs([][]int{{1, 2}, {2, 1}, {3, 4}, {5, 6}}))         // 1
+	fmt.Println(numEquivDominoPairs([][]int{{1, 2}, {1, 2}, {1, 1}, {1, 2}, {2, 2}})) // 3
+}
