@@ -34,4 +34,53 @@ Hash Table
 String
 Counting
 
+⏱ Complexity
+
+Time: O(n * m) — for each word (length m), we check letters
+
+Space: O(1) — only 26 letters in alphabet
+
 */
+
+package main
+
+import "fmt"
+
+func countCharacters(words []string, chars string) int {
+	// Step 1: Count frequency of each character in chars
+	charCount := make([]int, 26)
+	for _, c := range chars {
+		charCount[c-'a']++
+	}
+
+	total := 0
+
+	// Step 2: Check each word
+	for _, word := range words {
+		if canForm(word, charCount) {
+			total += len(word)
+		}
+	}
+
+	return total
+}
+
+// Helper function to check if word can be formed
+func canForm(word string, charCount []int) bool {
+	// Make a copy of charCount to avoid modifying the original
+	count := make([]int, 26)
+	copy(count, charCount)
+
+	for _, c := range word {
+		count[c-'a']--
+		if count[c-'a'] < 0 {
+			return false
+		}
+	}
+	return true
+}
+
+func main() {
+	fmt.Println(countCharacters([]string{"cat", "bt", "hat", "tree"}, "atach"))            // 6
+	fmt.Println(countCharacters([]string{"hello", "world", "leetcode"}, "welldonehoneyr")) // 10
+}
