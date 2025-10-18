@@ -34,4 +34,42 @@ distance.length == n
 Topics
 Array
 
+⏱ Complexity
+
+Time: O(n) — one pass through the array
+
+Space: O(1)
+
 */
+
+package main
+
+import "fmt"
+
+func distanceBetweenBusStops(distance []int, start int, destination int) int {
+	if start > destination {
+		start, destination = destination, start // ensure start < destination
+	}
+
+	total := 0
+	path := 0
+
+	for i, d := range distance {
+		total += d
+		if i >= start && i < destination {
+			path += d
+		}
+	}
+
+	// The shorter distance is either clockwise (path) or counterclockwise (total - path)
+	if path < total-path {
+		return path
+	}
+	return total - path
+}
+
+func main() {
+	fmt.Println(distanceBetweenBusStops([]int{1, 2, 3, 4}, 0, 1)) // 1
+	fmt.Println(distanceBetweenBusStops([]int{1, 2, 3, 4}, 0, 2)) // 3
+	fmt.Println(distanceBetweenBusStops([]int{1, 2, 3, 4}, 0, 3)) // 4
+}
