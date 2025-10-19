@@ -35,4 +35,45 @@ Topics
 Array
 Sorting
 
+⏱️ Complexity:
+
+Time: O(n log n) — due to sorting.
+
+Space: O(1) — only constant extra space used.
+
 */
+
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func minimumAbsDifference(arr []int) [][]int {
+	sort.Ints(arr)
+	minDiff := arr[1] - arr[0]
+
+	// Находим минимальную разницу
+	for i := 1; i < len(arr)-1; i++ {
+		diff := arr[i+1] - arr[i]
+		if diff < minDiff {
+			minDiff = diff
+		}
+	}
+
+	// Собираем все пары с минимальной разницей
+	result := [][]int{}
+	for i := 0; i < len(arr)-1; i++ {
+		if arr[i+1]-arr[i] == minDiff {
+			result = append(result, []int{arr[i], arr[i+1]})
+		}
+	}
+
+	return result
+}
+
+func main() {
+	arr := []int{4, 2, 1, 3}
+	fmt.Println(minimumAbsDifference(arr)) // [[1 2] [2 3] [3 4]]
+}
