@@ -40,3 +40,30 @@ Hash Table
 Enumeration
 
 */
+
+package main
+
+import "fmt"
+
+func countQuadruplets(nums []int) int {
+	n := len(nums)
+	count := 0
+
+	for d := n - 1; d >= 3; d-- {
+		for a := 0; a < d-2; a++ {
+			for b := a + 1; b < d-1; b++ {
+				for c := b + 1; c < d; c++ {
+					if nums[a]+nums[b]+nums[c] == nums[d] {
+						count++
+					}
+				}
+			}
+		}
+	}
+	return count
+}
+
+func main() {
+	nums := []int{1, 1, 1, 3, 5}
+	fmt.Println(countQuadruplets(nums)) // Output: 4
+}
