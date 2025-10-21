@@ -36,4 +36,50 @@ Topics
 Two Pointers
 String
 
+⏱️ Complexity
+
+Time: O(n) — each character checked at most once.
+
+Space: O(1) — only a few variables are used.
+
 */
+
+package main
+
+import (
+	"fmt"
+	"strings"
+	"unicode"
+)
+
+func isPalindrome(s string) bool {
+	left, right := 0, len(s)-1
+
+	for left < right {
+		// Move left pointer to the next alphanumeric character
+		for left < right && !unicode.IsLetter(rune(s[left])) && !unicode.IsDigit(rune(s[left])) {
+			left++
+		}
+
+		// Move right pointer to the previous alphanumeric character
+		for left < right && !unicode.IsLetter(rune(s[right])) && !unicode.IsDigit(rune(s[right])) {
+			right--
+		}
+
+		// Compare lowercase characters
+		if strings.ToLower(string(s[left])) != strings.ToLower(string(s[right])) {
+			return false
+		}
+
+		left++
+		right--
+	}
+
+	return true
+}
+
+func main() {
+	fmt.Println(isPalindrome("A man, a plan, a canal: Panama")) // true
+	fmt.Println(isPalindrome("race a car"))                     // false
+	fmt.Println(isPalindrome(" "))                              // true (empty is palindrome)
+}
