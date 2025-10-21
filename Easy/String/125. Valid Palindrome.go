@@ -38,9 +38,9 @@ String
 
 ⏱️ Complexity
 
-Time: O(n) — each character checked at most once.
+Time:  O(n) — each character checked at most once.
 
-Space: O(1) — only a few variables are used.
+Space:  O(1) — only a few variables are used.
 
 */
 
