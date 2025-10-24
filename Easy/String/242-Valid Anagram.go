@@ -34,5 +34,41 @@ Hash Table
 String
 Sorting
 
+⏱️ Complexity
+
+Time: O(n) — Single pass through both strings.
+
+Space: O(1) — Only a fixed-size array of 26 integers.
+
 */
 
+package main
+
+import "fmt"
+
+func isAnagram(s string, t string) bool {
+	if len(s) != len(t) {
+		return false
+	}
+
+	// Assuming only lowercase English letters
+	count := [26]int{}
+
+	for i := 0; i < len(s); i++ {
+		count[s[i]-'a']++
+		count[t[i]-'a']--
+	}
+
+	for _, v := range count {
+		if v != 0 {
+			return false
+		}
+	}
+
+	return true
+}
+
+func main() {
+	fmt.Println(isAnagram("anagram", "nagaram")) // true
+	fmt.Println(isAnagram("rat", "car"))         // false
+}
