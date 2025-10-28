@@ -38,4 +38,55 @@ Hash Table
 Linked List
 Two Pointers
 
+⏱️ Complexity
+Type	Complexity
+Time	O(n) — each pointer visits each node at most once
+Space	O(1) — only two pointers used
+
 */
+
+package main
+
+import "fmt"
+
+// Definition for singly-linked list.
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func hasCycle(head *ListNode) bool {
+	if head == nil || head.Next == nil {
+		return false
+	}
+
+	slow := head
+	fast := head
+
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next      // move 1 step
+		fast = fast.Next.Next // move 2 steps
+		if slow == fast {     // pointers meet
+			return true
+		}
+	}
+
+	return false
+}
+
+// Helper function for testing
+func main() {
+	// Create nodes
+	n1 := &ListNode{Val: 3}
+	n2 := &ListNode{Val: 2}
+	n3 := &ListNode{Val: 0}
+	n4 := &ListNode{Val: -4}
+
+	// Link nodes: 3 -> 2 -> 0 -> -4 -> 2 (cycle)
+	n1.Next = n2
+	n2.Next = n3
+	n3.Next = n4
+	n4.Next = n2
+
+	fmt.Println(hasCycle(n1)) // true
+}
