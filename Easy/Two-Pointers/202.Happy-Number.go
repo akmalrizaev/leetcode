@@ -36,4 +36,40 @@ Hash Table
 Math
 Two Pointers
 
+⏱️ Complexity
+Type	Complexity
+Time	O(log n) — number of digits decreases over iterations
+Space	O(log n) — for storing seen numbers
+
 */
+
+package main
+
+import "fmt"
+
+// Helper function to compute sum of squares of digits
+func getNext(n int) int {
+	sum := 0
+	for n > 0 {
+		digit := n % 10
+		sum += digit * digit
+		n /= 10
+	}
+	return sum
+}
+
+func isHappy(n int) bool {
+	seen := make(map[int]bool)
+
+	for n != 1 && !seen[n] {
+		seen[n] = true
+		n = getNext(n)
+	}
+
+	return n == 1
+}
+
+func main() {
+	fmt.Println(isHappy(19)) // true
+	fmt.Println(isHappy(2))  // false
+}
