@@ -40,4 +40,63 @@ Array
 Two Pointers
 Sorting
 
+⏱️ Complexity
+Type	Complexity
+Time	O(n²) — main loop * inner two-pointer loop
+Space	O(1) (not counting output)
+
 */
+
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func threeSum(nums []int) [][]int {
+	sort.Ints(nums)
+	result := [][]int{}
+
+	for i := 0; i < len(nums)-2; i++ {
+		// Skip duplicate nums[i]
+		if i > 0 && nums[i] == nums[i-1] {
+			continue
+		}
+
+		left, right := i+1, len(nums)-1
+
+		for left < right {
+			sum := nums[i] + nums[left] + nums[right]
+
+			if sum == 0 {
+				result = append(result, []int{nums[i], nums[left], nums[right]})
+
+				// Move left and right pointers to skip duplicates
+				for left < right && nums[left] == nums[left+1] {
+					left++
+				}
+				for left < right && nums[right] == nums[right-1] {
+					right--
+				}
+
+				left++
+				right--
+			} else if sum < 0 {
+				left++
+			} else {
+				right--
+			}
+		}
+	}
+
+	return result
+}
+
+func main() {
+	nums := []int{-1, 0, 1, 2, -1, -4}
+	fmt.Println(threeSum(nums)) // Output: [[-1 -1 2] [-1 0 1]]
+
+	nums2 := []int{0, 0, 0}
+	fmt.Println(threeSum(nums2)) // Output: [[0 0 0]]
+}
