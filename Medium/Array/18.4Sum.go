@@ -32,4 +32,63 @@ Array
 Two Pointers
 Sorting
 
+⏱️ Complexity
+Type	Complexity
+Time	O(n³) — 2 nested loops + 2-pointer scan
+Space	O(1) extra (excluding result)
+
 */
+
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func fourSum(nums []int, target int) [][]int {
+	sort.Ints(nums)
+	n := len(nums)
+	result := [][]int{}
+
+	for i := 0; i < n-3; i++ {
+		// Skip duplicate first numbers
+		if i > 0 && nums[i] == nums[i-1] {
+			continue
+		}
+		for j := i + 1; j < n-2; j++ {
+			// Skip duplicate second numbers
+			if j > i+1 && nums[j] == nums[j-1] {
+				continue
+			}
+			left, right := j+1, n-1
+			for left < right {
+				sum := nums[i] + nums[j] + nums[left] + nums[right]
+				if sum == target {
+					result = append(result, []int{nums[i], nums[j], nums[left], nums[right]})
+
+					// Move pointers and skip duplicates
+					left++
+					right--
+					for left < right && nums[left] == nums[left-1] {
+						left++
+					}
+					for left < right && nums[right] == nums[right+1] {
+						right--
+					}
+				} else if sum < target {
+					left++
+				} else {
+					right--
+				}
+			}
+		}
+	}
+	return result
+}
+
+func main() {
+	nums := []int{1, 0, -1, 0, -2, 2}
+	target := 0
+	fmt.Println(fourSum(nums, target))
+}
