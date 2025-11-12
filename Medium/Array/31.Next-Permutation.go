@@ -39,4 +39,60 @@ Topics
 Array
 Two Pointers
 
+⏱️ Complexity
+Type	Complexity
+Time	O(n)
+Space	O(1)
+
 */
+
+package main
+
+import "fmt"
+
+func nextPermutation(nums []int) {
+	n := len(nums)
+	if n <= 1 {
+		return
+	}
+
+	// Step 1: Find first decreasing index from right
+	i := n - 2
+	for i >= 0 && nums[i] >= nums[i+1] {
+		i--
+	}
+
+	// Step 2: If found, find next larger number to swap
+	if i >= 0 {
+		j := n - 1
+		for nums[j] <= nums[i] {
+			j--
+		}
+		nums[i], nums[j] = nums[j], nums[i]
+	}
+
+	// Step 3: Reverse the suffix (nums[i+1:])
+	reverse(nums, i+1, n-1)
+}
+
+func reverse(nums []int, left, right int) {
+	for left < right {
+		nums[left], nums[right] = nums[right], nums[left]
+		left++
+		right--
+	}
+}
+
+func main() {
+	nums1 := []int{1, 2, 3}
+	nextPermutation(nums1)
+	fmt.Println(nums1) // [1 3 2]
+
+	nums2 := []int{3, 2, 1}
+	nextPermutation(nums2)
+	fmt.Println(nums2) // [1 2 3]
+
+	nums3 := []int{1, 1, 5}
+	nextPermutation(nums3)
+	fmt.Println(nums3) // [1 5 1]
+}
