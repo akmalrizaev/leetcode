@@ -49,4 +49,72 @@ Array
 Hash Table
 Matrix
 
+⏱️ Complexity
+Type	Complexity
+Time	O(81) = constant, since board size is fixed
+Space	O(1) (27 sets storing max 9 items each)
+
 */
+
+package main
+
+import "fmt"
+
+func isValidSudoku(board [][]byte) bool {
+	rows := make([]map[byte]bool, 9)
+	cols := make([]map[byte]bool, 9)
+	boxes := make([]map[byte]bool, 9)
+
+	for i := 0; i < 9; i++ {
+		rows[i] = make(map[byte]bool)
+		cols[i] = make(map[byte]bool)
+		boxes[i] = make(map[byte]bool)
+	}
+
+	for r := 0; r < 9; r++ {
+		for c := 0; c < 9; c++ {
+			val := board[r][c]
+
+			if val == '.' {
+				continue
+			}
+
+			// Check row
+			if rows[r][val] {
+				return false
+			}
+			rows[r][val] = true
+
+			// Check column
+			if cols[c][val] {
+				return false
+			}
+			cols[c][val] = true
+
+			// Check box
+			boxIndex := (r/3)*3 + (c / 3)
+			if boxes[boxIndex][val] {
+				return false
+			}
+			boxes[boxIndex][val] = true
+		}
+	}
+
+	return true
+}
+
+func main() {
+	board := [][]byte{
+		{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+		{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+		{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+		{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+		{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+		{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+		{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+		{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+		{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+	}
+
+	fmt.Println(isValidSudoku(board)) // true
+}
