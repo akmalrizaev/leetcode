@@ -42,3 +42,34 @@ Array
 Backtracking
 
 */
+
+package main
+
+func combinationSum(candidates []int, target int) [][]int {
+	var res [][]int
+	var comb []int
+
+	var backtrack func(start int, sum int)
+	backtrack = func(start int, sum int) {
+		if sum == target {
+			// make a copy of comb
+			temp := make([]int, len(comb))
+			copy(temp, comb)
+			res = append(res, temp)
+			return
+		}
+
+		if sum > target {
+			return
+		}
+
+		for i := start; i < len(candidates); i++ {
+			comb = append(comb, candidates[i]) // choose
+			backtrack(i, sum+candidates[i])    // not i+1 because reuse allowed
+			comb = comb[:len(comb)-1]          // undo
+		}
+	}
+
+	backtrack(0, 0)
+	return res
+}
