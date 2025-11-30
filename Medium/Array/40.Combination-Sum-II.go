@@ -41,3 +41,44 @@ Array
 Backtracking
 
 */
+
+package main
+
+import (
+	"sort"
+)
+
+func combinationSum2(candidates []int, target int) [][]int {
+	sort.Ints(candidates) // Important to skip duplicates
+
+	var res [][]int
+	var comb []int
+
+	var backtrack func(start int, remaining int)
+	backtrack = func(start int, remaining int) {
+		if remaining == 0 {
+			temp := make([]int, len(comb))
+			copy(temp, comb)
+			res = append(res, temp)
+			return
+		}
+
+		for i := start; i < len(candidates); i++ {
+			// Skip duplicates at same depth
+			if i > start && candidates[i] == candidates[i-1] {
+				continue
+			}
+
+			if candidates[i] > remaining {
+				break
+			}
+
+			comb = append(comb, candidates[i])
+			backtrack(i+1, remaining-candidates[i]) // can't reuse elements
+			comb = comb[:len(comb)-1]
+		}
+	}
+
+	backtrack(0, target)
+	return res
+}
