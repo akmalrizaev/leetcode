@@ -24,4 +24,46 @@ Constraints:
 intervals[i].length == 2
 0 <= starti <= endi <= 104
 
+Time complexity: O(n log n) (sorting)
+
+Space complexity: O(n) for output
+
 */
+
+package main
+
+import (
+	"sort"
+)
+
+func merge(intervals [][]int) [][]int {
+	if len(intervals) == 0 {
+		return intervals
+	}
+
+	// Sort by start time
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][0] < intervals[j][0]
+	})
+
+	var res [][]int
+	current := intervals[0]
+
+	for i := 1; i < len(intervals); i++ {
+		if intervals[i][0] <= current[1] {
+			// Overlap: merge
+			if intervals[i][1] > current[1] {
+				current[1] = intervals[i][1]
+			}
+		} else {
+			// No overlap: push current and move on
+			res = append(res, current)
+			current = intervals[i]
+		}
+	}
+
+	// Add the last interval
+	res = append(res, current)
+
+	return res
+}
