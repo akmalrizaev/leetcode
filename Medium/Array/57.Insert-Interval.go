@@ -35,4 +35,44 @@ newInterval.length == 2
 Topics
 Array
 
+Time: O(n) — single pass through intervals
+
+Space: O(n) — result array
+
 */
+
+package main
+
+func insert(intervals [][]int, newInterval []int) [][]int {
+	var res [][]int
+	i := 0
+	n := len(intervals)
+
+	// 1. Add intervals that come before newInterval
+	for i < n && intervals[i][1] < newInterval[0] {
+		res = append(res, intervals[i])
+		i++
+	}
+
+	// 2. Merge overlapping intervals
+	for i < n && intervals[i][0] <= newInterval[1] {
+		if intervals[i][0] < newInterval[0] {
+			newInterval[0] = intervals[i][0]
+		}
+		if intervals[i][1] > newInterval[1] {
+			newInterval[1] = intervals[i][1]
+		}
+		i++
+	}
+
+	// Insert merged interval
+	res = append(res, newInterval)
+
+	// 3. Add remaining intervals
+	for i < n {
+		res = append(res, intervals[i])
+		i++
+	}
+
+	return res
+}
