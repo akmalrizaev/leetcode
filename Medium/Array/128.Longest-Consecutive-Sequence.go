@@ -29,3 +29,37 @@ Array
 Hash Table
 Union Find
 */
+
+package main
+
+func longestConsecutive(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+
+	set := make(map[int]bool)
+	for _, num := range nums {
+		set[num] = true
+	}
+
+	longest := 0
+
+	for num := range set {
+		// Only start counting if num is the beginning of a sequence
+		if !set[num-1] {
+			currentNum := num
+			currentStreak := 1
+
+			for set[currentNum+1] {
+				currentNum++
+				currentStreak++
+			}
+
+			if currentStreak > longest {
+				longest = currentStreak
+			}
+		}
+	}
+
+	return longest
+}
