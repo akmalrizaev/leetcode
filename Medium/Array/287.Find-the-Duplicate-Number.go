@@ -42,4 +42,33 @@ Two Pointers
 Binary Search
 Bit Manipulation
 
+⏱️ Complexity
+Type	Complexity
+Time	O(n)
+Space	O(1)
+
 */
+
+package main
+
+func findDuplicate(nums []int) int {
+	// Phase 1: Detect cycle
+	slow, fast := nums[0], nums[0]
+
+	for {
+		slow = nums[slow]
+		fast = nums[nums[fast]]
+		if slow == fast {
+			break
+		}
+	}
+
+	// Phase 2: Find cycle entrance
+	slow = nums[0]
+	for slow != fast {
+		slow = nums[slow]
+		fast = nums[fast]
+	}
+
+	return slow
+}
