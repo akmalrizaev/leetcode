@@ -38,4 +38,38 @@ Bucket Sort
 Counting
 Quickselect
 
+⏱️ Complexity
+Type	Complexity
+Time	O(n)
+Space	O(n)
+
 */
+
+package main
+
+func topKFrequent(nums []int, k int) []int {
+	// Step 1: Frequency map
+	freq := make(map[int]int)
+	for _, num := range nums {
+		freq[num]++
+	}
+
+	// Step 2: Bucket sort (index = frequency)
+	buckets := make([][]int, len(nums)+1)
+	for num, f := range freq {
+		buckets[f] = append(buckets[f], num)
+	}
+
+	// Step 3: Collect top k frequent elements
+	result := []int{}
+	for i := len(buckets) - 1; i >= 0 && len(result) < k; i-- {
+		for _, num := range buckets[i] {
+			result = append(result, num)
+			if len(result) == k {
+				break
+			}
+		}
+	}
+
+	return result
+}
