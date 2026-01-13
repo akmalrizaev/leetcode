@@ -42,4 +42,37 @@ Array
 Hash Table
 Sliding Window
 
+⏱️ Complexity
+Type	Complexity
+Time	O(n)
+Space	O(1) (map size ≤ 2)
+
 */
+
+package main
+
+func totalFruit(fruits []int) int {
+	left := 0
+	maxFruits := 0
+	count := make(map[int]int)
+
+	for right := 0; right < len(fruits); right++ {
+		count[fruits[right]]++
+
+		// Shrink window if more than 2 fruit types
+		for len(count) > 2 {
+			count[fruits[left]]--
+			if count[fruits[left]] == 0 {
+				delete(count, fruits[left])
+			}
+			left++
+		}
+
+		// Update maximum
+		if right-left+1 > maxFruits {
+			maxFruits = right - left + 1
+		}
+	}
+
+	return maxFruits
+}
