@@ -47,5 +47,37 @@ Hash Table
 String
 Sorting
 
+
+⏱️ Complexity Analysis
+Metric	Value
+Time	O(n · k log k) (n = number of strings, k = max word length)
+Space	O(n · k)
+
 */
 
+package main
+
+import (
+	"sort"
+)
+
+func groupAnagrams(strs []string) [][]string {
+	anagrams := make(map[string][]string)
+
+	for _, word := range strs {
+		chars := []rune(word)
+		sort.Slice(chars, func(i, j int) bool {
+			return chars[i] < chars[j]
+		})
+
+		key := string(chars)
+		anagrams[key] = append(anagrams[key], word)
+	}
+
+	result := make([][]string, 0, len(anagrams))
+	for _, group := range anagrams {
+		result = append(result, group)
+	}
+
+	return result
+}
