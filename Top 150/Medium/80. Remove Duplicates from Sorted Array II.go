@@ -48,5 +48,28 @@ Constraints:
 nums is sorted in non-decreasing order.
 
 
+⏱️ Complexity
+Type	Complexity
+Time	O(n)
+Space	O(1)
 
 */
+
+package main
+
+func removeDuplicates(nums []int) int {
+	if len(nums) <= 2 {
+		return len(nums)
+	}
+
+	i := 2 // First two are always valid
+
+	for j := 2; j < len(nums); j++ {
+		if nums[j] != nums[i-2] {
+			nums[i] = nums[j]
+			i++
+		}
+	}
+
+	return i
+}
