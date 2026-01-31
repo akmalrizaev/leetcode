@@ -48,4 +48,28 @@ One line of thought is based on reversing the array (or parts of it) to obtain t
 Hint 4
 The other line of thought is a tad bit complicated but essentially it builds on the idea of placing each element in its original position while keeping track of the element originally in that position. Basically, at every step, we place an element in its rightful position and keep track of the element already there or the one being overwritten in an additional variable. We can't do this in one linear pass and the idea here is based on cyclic-dependencies between elements.
 
+⏱️ Complexity
+Type	Complexity
+Time	O(n)
+Space	O(1)
+
 */
+
+package main
+
+func rotate(nums []int, k int) {
+	n := len(nums)
+	k = k % n
+
+	reverse(nums, 0, n-1)
+	reverse(nums, 0, k-1)
+	reverse(nums, k, n-1)
+}
+
+func reverse(nums []int, left int, right int) {
+	for left < right {
+		nums[left], nums[right] = nums[right], nums[left]
+		left++
+		right--
+	}
+}
