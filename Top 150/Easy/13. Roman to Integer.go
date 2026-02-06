@@ -53,4 +53,40 @@ String
 Hint 1
 Problem is simpler to solve by working the string from back to front and using a map.
 
+
 */
+
+/*
+
+⏱️ Complexity
+Type	Complexity
+Time	O(n)
+Space	O(1)
+
+*/
+
+package main
+
+func romanToInt(s string) int {
+	values := map[byte]int{
+		'I': 1,
+		'V': 5,
+		'X': 10,
+		'L': 50,
+		'C': 100,
+		'D': 500,
+		'M': 1000,
+	}
+
+	result := 0
+
+	for i := 0; i < len(s); i++ {
+		if i+1 < len(s) && values[s[i]] < values[s[i+1]] {
+			result -= values[s[i]]
+		} else {
+			result += values[s[i]]
+		}
+	}
+
+	return result
+}
