@@ -32,6 +32,31 @@ There will be at least one word in s.
 
 
 
-
-
 */
+
+/*
+⏱️ Complexity
+Type	Complexity
+Time	O(n)
+Space	O(1)
+*/
+
+package main
+
+func lengthOfLastWord(s string) int {
+	length := 0
+	i := len(s) - 1
+
+	// Skip trailing spaces
+	for i >= 0 && s[i] == ' ' {
+		i--
+	}
+
+	// Count last word
+	for i >= 0 && s[i] != ' ' {
+		length++
+		i--
+	}
+
+	return length
+}
